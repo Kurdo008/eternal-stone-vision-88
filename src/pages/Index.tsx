@@ -1,31 +1,31 @@
 
 import { Link } from 'react-router-dom';
-import { ArrowRight, Leaf, Shield, Palette, Eye, Mountain, TreePine, Flower, Heart } from 'lucide-react';
+import { ArrowRight, Leaf, Shield, Palette, Eye, Mountain, TreePine, Flower, Heart, MapPin, Clock, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/Header';
 
 const Index = () => {
-  const features = [
+  const craftFeatures = [
     {
       icon: Eye,
-      title: "3D Visualisatie",
-      description: "Bekijk uw monument in realistische 3D voordat u bestelt"
-    },
-    {
-      icon: Palette,
-      title: "Persoonlijke Aanpassing",
-      description: "Pas tekst, materiaal en afmetingen aan naar uw wensen"
-    },
-    {
-      icon: Shield,
-      title: "Kwaliteit Garantie",
-      description: "Alleen de beste materialen en vakmanschap"
+      title: "Handgemaakt Vakmanschap",
+      description: "Elke steen wordt met zorg en precisie bewerkt door ervaren ambachtslieden"
     },
     {
       icon: Leaf,
-      title: "Duurzaam",
-      description: "Natuurlijke materialen in harmonie met de natuur"
+      title: "Natuurlijke Harmonie",
+      description: "Ontwerpen die één worden met de omgeving en de natuur respecteren"
+    },
+    {
+      icon: Shield,
+      title: "Eeuwige Duurzaamheid",
+      description: "Materialen die generaties lang hun schoonheid behouden"
+    },
+    {
+      icon: Palette,
+      title: "Persoonlijke Verhalen",
+      description: "Elk monument vertelt een uniek verhaal van liefde en herinnering"
     }
   ];
 
@@ -60,7 +60,7 @@ const Index = () => {
         <div className="container mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
             Waardige Monumenten
-            <span className="block text-bronze">in Harmonie</span>
+            <span className="block text-sage-200">in Harmonie</span>
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-sage-100 animate-fade-in">
             Ontwerp en personaliseer uw monument met onze innovatieve 3D technologie. 
@@ -69,7 +69,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
             <Button 
               size="lg" 
-              className="bg-bronze hover:bg-bronze/90 text-sage-700 font-semibold px-8 py-4 text-lg"
+              className="bg-sage-200 hover:bg-sage-300 text-sage-800 font-semibold px-8 py-4 text-lg"
               asChild
             >
               <Link to="/products">
@@ -88,20 +88,20 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Craftsmanship Section - Replacing Features */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-sage-700 mb-4">
-              Waarom Kiezen Voor Eternum?
+              Waar Ambacht & Natuur Samenkomen
             </h2>
             <p className="text-xl text-sage-600 max-w-2xl mx-auto">
-              Wij combineren traditioneel vakmanschap met respect voor de natuur
+              Ontdek hoe wij traditionele technieken combineren met respect voor de natuurlijke schoonheid
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
+            {craftFeatures.map((feature, index) => (
               <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300 border-2 hover:border-sage-300/50">
                 <CardContent className="p-8">
                   <div className="bg-sage-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -162,7 +162,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Memorial Gallery - Replacing Testimonials */}
+      {/* Memorial Gallery */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
@@ -192,6 +192,74 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Location Section */}
+      <section className="py-20 px-4 bg-sage-50">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-sage-700 mb-4">
+              Bezoek Onze Showroom
+            </h2>
+            <p className="text-xl text-sage-600 max-w-2xl mx-auto">
+              Kom langs en ervaar de kwaliteit van onze monumenten persoonlijk
+            </p>
+          </div>
+          
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="bg-sage-600 p-3 rounded-lg">
+                  <MapPin className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-sage-700 mb-2">Adres</h3>
+                  <p className="text-sage-600">
+                    Monumentenstraat 123<br />
+                    1234 AB Amsterdam<br />
+                    Nederland
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="bg-sage-600 p-3 rounded-lg">
+                  <Clock className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-sage-700 mb-2">Openingstijden</h3>
+                  <p className="text-sage-600">
+                    Maandag - Vrijdag: 9:00 - 17:00<br />
+                    Zaterdag: 10:00 - 16:00<br />
+                    Zondag: Gesloten
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="bg-sage-600 p-3 rounded-lg">
+                  <Phone className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-sage-700 mb-2">Contact</h3>
+                  <p className="text-sage-600">
+                    Telefoon: +31 20 123 4567<br />
+                    Email: info@eternummonuments.nl
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white p-8 rounded-xl shadow-lg">
+              <div className="aspect-video bg-gradient-to-br from-sage-100 to-sage-200 rounded-lg flex items-center justify-center">
+                <div className="text-center">
+                  <MapPin className="h-16 w-16 text-sage-600 mx-auto mb-4" />
+                  <p className="text-sage-600">Interactieve kaart wordt hier geladen</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 px-4 nature-gradient text-white">
         <div className="container mx-auto text-center">
@@ -202,7 +270,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-bronze hover:bg-bronze/90 text-sage-700 font-semibold"
+              className="bg-sage-200 hover:bg-sage-300 text-sage-800 font-semibold"
               asChild
             >
               <Link to="/products">Bekijk Producten</Link>

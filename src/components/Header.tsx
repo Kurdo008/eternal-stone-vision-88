@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Mountain, User, ShoppingCart } from 'lucide-react';
+import { Search, Mountain, User, ShoppingCart, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -66,7 +66,7 @@ const Header = () => {
               className="bg-sage-600 hover:bg-sage-700 text-white font-medium"
               asChild
             >
-              <Link to="/editor">3D Editor</Link>
+              <Link to="/contact">Contact</Link>
             </Button>
           </div>
         </div>

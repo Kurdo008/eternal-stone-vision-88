@@ -1,5 +1,5 @@
 
-import { useRef } from 'react';
+import { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Text3D, Center, Environment } from '@react-three/drei';
 import * as THREE from 'three';
@@ -62,7 +62,12 @@ const MonumentMesh = ({ material, text, shape, color }: Monument3DProps) => {
   const getGeometry = () => {
     switch (shape) {
       case 'rectangular':
-        return <boxGeometry args={[2, 3, 0.3]} />;
+        return (
+          <mesh>
+            <boxGeometry args={[2, 3, 0.3]} />
+            {getMaterial()}
+          </mesh>
+        );
       case 'cross':
         return (
           <group>
@@ -94,18 +99,23 @@ const MonumentMesh = ({ material, text, shape, color }: Monument3DProps) => {
           </group>
         );
       default:
-        return <boxGeometry args={[2, 3, 0.3]} />;
+        return (
+          <mesh>
+            <boxGeometry args={[2, 3, 0.3]} />
+            {getMaterial()}
+          </mesh>
+        );
     }
   };
 
-  if (shape === 'cross' || shape === 'heart') {
-    return (
-      <group ref={meshRef}>
-        {getGeometry()}
-        {text && (
-          <Center position={[0, -1.8, 0.2]}>
+  return (
+    <group ref={meshRef}>
+      {getGeometry()}
+      {text && (
+        <Suspense fallback={null}>
+          <Center position={[0, shape === 'rectangular' ? 0.5 : -1.8, 0.2]}>
             <Text3D
-              font="/fonts/helvetiker_regular.typeface.json"
+              font="https://threejs.org/examples/fonts/helvetiker_regular.typeface.json"
               size={0.2}
               height={0.02}
               curveSegments={12}
@@ -114,29 +124,7 @@ const MonumentMesh = ({ material, text, shape, color }: Monument3DProps) => {
               <meshStandardMaterial color="#333333" />
             </Text3D>
           </Center>
-        )}
-      </group>
-    );
-  }
-
-  return (
-    <group ref={meshRef}>
-      <mesh>
-        {getGeometry()}
-        {getMaterial()}
-      </mesh>
-      {text && (
-        <Center position={[0, 0.5, 0.2]}>
-          <Text3D
-            font="/fonts/helvetiker_regular.typeface.json"
-            size={0.2}
-            height={0.02}
-            curveSegments={12}
-          >
-            {text}
-            <meshStandardMaterial color="#333333" />
-          </Text3D>
-        </Center>
+        </Suspense>
       )}
     </group>
   );
@@ -144,23 +132,25 @@ const MonumentMesh = ({ material, text, shape, color }: Monument3DProps) => {
 
 const Monument3D = (props: Monument3DProps) => {
   return (
-    <div className="w-full h-96 bg-gradient-to-b from-sky-100 to-green-100 rounded-lg overflow-hidden">
+    <div className="w-full h-96 bg-gradient-to-b from-sage-100 to-sage-50 rounded-lg overflow-hidden">
       <Canvas camera={{ position: [4, 2, 4], fov: 50 }}>
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <pointLight position={[-10, -10, -10]} />
-        
-        <MonumentMesh {...props} />
-        
-        <OrbitControls 
-          enablePan={true}
-          enableZoom={true}
-          enableRotate={true}
-          minDistance={3}
-          maxDistance={8}
-        />
-        
-        <Environment preset="sunset" />
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.4} />
+          <directionalLight position={[10, 10, 5]} intensity={1} />
+          <pointLight position={[-10, -10, -10]} />
+          
+          <MonumentMesh {...props} />
+          
+          <OrbitControls 
+            enablePan={true}
+            enableZoom={true}
+            enableRotate={true}
+            minDistance={3}
+            maxDistance={8}
+          />
+          
+          <Environment preset="sunset" />
+        </Suspense>
       </Canvas>
     </div>
   );

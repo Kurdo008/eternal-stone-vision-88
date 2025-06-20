@@ -12,7 +12,7 @@ interface Monument3DProps {
 }
 
 const MonumentMesh = ({ material, text, shape, color }: Monument3DProps) => {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<THREE.Group>(null);
   
   useFrame((state) => {
     if (meshRef.current) {

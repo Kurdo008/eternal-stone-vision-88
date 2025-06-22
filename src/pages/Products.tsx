@@ -1,18 +1,20 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Eye, ArrowRight, Filter, Euro, Package, ShoppingCart } from 'lucide-react';
+import { Eye, ArrowRight, Filter, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import { useToast } from '@/hooks/use-toast';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedMaterial, setSelectedMaterial] = useState('all');
   const [selectedPriceRange, setSelectedPriceRange] = useState('all');
+  const { toast } = useToast();
 
   const products = [
     {
@@ -114,31 +116,44 @@ const Products = () => {
     return categoryMatch && materialMatch && priceRangeMatch;
   });
 
+  const handleAddToCart = (product: typeof products[0]) => {
+    toast({
+      title: "Product toegevoegd!",
+      description: `${product.name} is toegevoegd aan uw winkelwagen`,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-sage-50 to-moss-50">
       <Header />
       
-      {/* Hero Section */}
-      <section className="py-12 md:py-16 px-4 nature-gradient text-white">
-        <div className="container mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Onze Monument Collectie</h1>
-          <p className="text-base md:text-lg lg:text-xl text-sage-100 max-w-2xl mx-auto">
+      {/* Hero Section with Background Image */}
+      <section className="relative py-12 md:py-16 px-4 nature-gradient text-white">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-30"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1472396961693-142e6e269027?w=1920&h=1080&fit=crop')"
+          }}
+        ></div>
+        <div className="container mx-auto text-center relative z-10">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">Onze Monument Collectie</h1>
+          <p className="text-sm md:text-lg text-sage-100 max-w-2xl mx-auto">
             Ontdek onze uitgebreide collectie grafmonumenten, elk met zorg vervaardigd en beschikbaar in 3D
           </p>
         </div>
       </section>
 
       {/* Enhanced Filters */}
-      <section className="py-6 px-4 bg-white border-b border-sage-200">
+      <section className="py-4 px-4 bg-white border-b border-sage-200">
         <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+          <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
             <div className="flex items-center gap-2">
-              <Filter className="h-5 w-5 text-sage-600" />
-              <span className="font-medium text-sage-700">Filters:</span>
+              <Filter className="h-4 w-4 text-sage-600" />
+              <span className="font-medium text-sage-700 text-sm">Filters:</span>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+            <div className="grid grid-cols-3 gap-2 w-full lg:w-auto lg:flex lg:gap-3">
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-full sm:w-40 lg:w-44 border-sage-300 focus:border-sage-500 text-sm">
+                <SelectTrigger className="w-full lg:w-36 border-sage-300 focus:border-sage-500 text-xs">
                   <SelectValue placeholder="Categorie" />
                 </SelectTrigger>
                 <SelectContent>
@@ -151,7 +166,7 @@ const Products = () => {
               </Select>
               
               <Select value={selectedMaterial} onValueChange={setSelectedMaterial}>
-                <SelectTrigger className="w-full sm:w-40 lg:w-44 border-sage-300 focus:border-sage-500 text-sm">
+                <SelectTrigger className="w-full lg:w-36 border-sage-300 focus:border-sage-500 text-xs">
                   <SelectValue placeholder="Materiaal" />
                 </SelectTrigger>
                 <SelectContent>
@@ -164,7 +179,7 @@ const Products = () => {
               </Select>
 
               <Select value={selectedPriceRange} onValueChange={setSelectedPriceRange}>
-                <SelectTrigger className="w-full sm:w-40 lg:w-44 border-sage-300 focus:border-sage-500 text-sm">
+                <SelectTrigger className="w-full lg:w-36 border-sage-300 focus:border-sage-500 text-xs">
                   <SelectValue placeholder="Prijsklasse" />
                 </SelectTrigger>
                 <SelectContent>
@@ -219,35 +234,25 @@ const Products = () => {
                 </CardContent>
                 
                 <CardFooter className="p-3 md:p-4 lg:p-6 pt-0">
-                  <div className="flex gap-2 w-full">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1 border-sage-600 text-sage-700 hover:bg-sage-50 text-xs"
-                      asChild
-                    >
-                      <Link to={`/product/${product.id}`}>Details</Link>
-                    </Button>
+                  <div className="flex gap-2 w-full mb-2">
                     <Button
                       size="sm"
                       className="flex-1 bg-forest-600 hover:bg-forest-700 text-white text-xs"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      <ShoppingCart className="h-3 w-3 mr-1" />
+                      Toevoegen
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="flex-1 bg-sage-600 hover:bg-sage-700 text-white text-xs"
                       asChild
                     >
-                      <Link to={`/cart?add=${product.id}`}>
-                        <ShoppingCart className="h-3 w-3 mr-1" />
-                        Toevoegen
+                      <Link to={`/editor?product=${product.id}`}>
+                        3D Editor <ArrowRight className="h-3 w-3 ml-1" />
                       </Link>
                     </Button>
                   </div>
-                  <Button
-                    size="sm"
-                    className="w-full mt-2 bg-sage-600 hover:bg-sage-700 text-white text-xs"
-                    asChild
-                  >
-                    <Link to={`/editor?product=${product.id}`}>
-                      3D Editor <ArrowRight className="h-3 w-3 ml-1" />
-                    </Link>
-                  </Button>
                 </CardFooter>
               </Card>
             ))}

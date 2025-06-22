@@ -34,24 +34,24 @@ const WhatsAppButton = ({ showPopup = true }: WhatsAppButtonProps) => {
     <>
       {/* Homepage popup only */}
       {showHomePopup && isHomePage && (
-        <div className="fixed bottom-24 right-2 md:right-6 z-40 animate-fade-in">
-          <Card className="w-48 md:w-56 shadow-lg border-2 border-sage-300">
-            <CardHeader className="pb-2">
+        <div className="fixed bottom-20 right-2 md:right-6 z-40 animate-fade-in">
+          <Card className="w-40 md:w-48 shadow-lg border-2 border-sage-300">
+            <CardHeader className="pb-1">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-xs md:text-sm text-sage-700">Hulp Nodig?</CardTitle>
                 <Button 
                   variant="ghost" 
                   size="sm" 
                   onClick={() => setShowHomePopup(false)}
-                  className="h-6 w-6 p-0"
+                  className="h-5 w-5 p-0"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-3 w-3" />
                 </Button>
               </div>
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-xs text-sage-600 mb-3">
-                Neem direct contact op voor hulp of advies. Binnen enkele uren beantwoord!
+              <p className="text-xs text-sage-600 mb-2">
+                Neem direct contact op voor hulp of advies.
               </p>
               <Button 
                 onClick={handleWhatsAppClick}
@@ -60,7 +60,7 @@ const WhatsAppButton = ({ showPopup = true }: WhatsAppButtonProps) => {
                 <img 
                   src="/lovable-uploads/31004f9e-8700-40fc-9c29-ae4a60096a94.png" 
                   alt="WhatsApp" 
-                  className="h-4 w-4 mr-2" 
+                  className="h-3 w-3 mr-2" 
                 />
                 Chat via WhatsApp
               </Button>

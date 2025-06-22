@@ -4,6 +4,9 @@ import { ArrowRight, Leaf, Shield, Palette, Eye, Mountain, TreePine, Flower, Hea
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/Header';
+import WhatsAppButton from '@/components/WhatsAppButton';
+import CollectionShowcase from '@/components/CollectionShowcase';
+import Professional3DViewer from '@/components/Professional3DViewer';
 
 const Index = () => {
   const craftFeatures = [
@@ -54,22 +57,28 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-sage-50 to-white">
       <Header />
       
-      {/* Hero Section */}
+      {/* Hero Section with Image */}
       <section className="relative py-20 px-4 nature-gradient text-white overflow-hidden">
         <div className="absolute inset-0 nature-texture"></div>
+        {/* Hero background image overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-30"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1472396961693-142e6e269027?w=1920&h=1080&fit=crop')"
+          }}
+        ></div>
         <div className="container mx-auto text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
             Waardige Monumenten
-            <span className="block text-sage-200">in Harmonie</span>
+            <span className="block text-sage-200">in Harmonie met de Natuur</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-sage-100 animate-fade-in">
-            Ontwerp en personaliseer uw monument met onze innovatieve 3D technologie. 
-            Eerbiedige craftsmanship in harmonie met de natuur.
+          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-sage-100 animate-fade-in">
+            Handgemaakt vakmanschap voor eeuwige herinneringen
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
             <Button 
               size="lg" 
-              className="bg-sage-200 hover:bg-sage-300 text-sage-800 font-semibold px-8 py-4 text-lg"
+              className="bg-slate-600 hover:bg-slate-700 text-white font-semibold px-8 py-4 text-lg"
               asChild
             >
               <Link to="/products">
@@ -82,14 +91,17 @@ const Index = () => {
               className="border-2 border-white text-white hover:bg-white hover:text-sage-700 px-8 py-4 text-lg"
               asChild
             >
-              <Link to="/editor">Start 3D Editor</Link>
+              <Link to="/editor">Start 3D Ontwerp</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Craftsmanship Section - Replacing Features */}
-      <section className="py-20 px-4">
+      {/* Collection Showcase */}
+      <CollectionShowcase />
+
+      {/* Craftsmanship Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-sage-50 to-moss-50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-sage-700 mb-4">
@@ -102,7 +114,7 @@ const Index = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {craftFeatures.map((feature, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300 border-2 hover:border-sage-300/50">
+              <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300 border-2 hover:border-sage-300/50 bg-white/80 backdrop-blur-sm">
                 <CardContent className="p-8">
                   <div className="bg-sage-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                     <feature.icon className="h-8 w-8 text-sage-600" />
@@ -116,8 +128,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Preview Section */}
-      <section className="py-20 px-4 bg-sage-50">
+      {/* Enhanced 3D Preview Section */}
+      <section className="py-20 px-4 bg-white">
         <div className="container mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -141,29 +153,33 @@ const Index = () => {
                   <div className="w-2 h-2 bg-sage-600 rounded-full mr-3"></div>
                   Instant tekst en gravure preview
                 </li>
+                <li className="flex items-center text-sage-700">
+                  <div className="w-2 h-2 bg-sage-600 rounded-full mr-3"></div>
+                  Professionele visualisatie
+                </li>
               </ul>
               <Button 
                 size="lg" 
-                className="bg-sage-600 hover:bg-sage-700 text-white"
+                className="bg-slate-600 hover:bg-slate-700 text-white"
                 asChild
               >
                 <Link to="/editor">Probeer 3D Editor</Link>
               </Button>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <div className="aspect-square bg-gradient-to-br from-sage-100 to-sage-200 rounded-lg flex items-center justify-center">
-                <div className="text-center">
-                  <Mountain className="h-16 w-16 text-sage-600 mx-auto mb-4" />
-                  <p className="text-sage-600">3D Preview wordt hier geladen</p>
-                </div>
-              </div>
+            <div className="bg-gradient-to-br from-sage-50 to-white p-4 rounded-xl shadow-lg">
+              <Professional3DViewer 
+                material="granite"
+                text="In Herinnering"
+                shape="rectangular"
+                color="#4a4a4a"
+              />
             </div>
           </div>
         </div>
       </section>
 
       {/* Memorial Gallery */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-gradient-to-br from-moss-50 to-sage-50">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-sage-700 mb-4">
@@ -176,7 +192,7 @@ const Index = () => {
           
           <div className="grid md:grid-cols-3 gap-8">
             {memorialGallery.map((item, index) => (
-              <Card key={index} className="overflow-hidden border-2 hover:border-sage-300/50 transition-colors group">
+              <Card key={index} className="overflow-hidden border-2 hover:border-sage-300/50 transition-colors group bg-white/80 backdrop-blur-sm">
                 <div className="aspect-square bg-gradient-to-br from-sage-100 to-sage-200 relative overflow-hidden">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <item.icon className="h-20 w-20 text-sage-500 group-hover:text-sage-600 transition-colors" />
@@ -193,7 +209,7 @@ const Index = () => {
       </section>
 
       {/* Location Section */}
-      <section className="py-20 px-4 bg-sage-50">
+      <section className="py-20 px-4 bg-white">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-sage-700 mb-4">
@@ -270,7 +286,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-sage-200 hover:bg-sage-300 text-sage-800 font-semibold"
+              className="bg-slate-600 hover:bg-slate-700 text-white font-semibold"
               asChild
             >
               <Link to="/products">Bekijk Producten</Link>
@@ -286,6 +302,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <WhatsAppButton />
     </div>
   );
 };

@@ -1,11 +1,19 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const WhatsAppButton = () => {
-  const [showPopup, setShowPopup] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 10000); // 10 seconds delay
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleWhatsAppClick = () => {
     window.open('https://wa.me/31201234567?text=Hallo,%20ik%20heb%20hulp%20nodig%20met%20monumenten', '_blank');
@@ -16,7 +24,7 @@ const WhatsAppButton = () => {
       {/* Popup notification */}
       {showPopup && (
         <div className="fixed bottom-24 right-6 z-40 animate-fade-in">
-          <Card className="w-64 shadow-lg border-2 border-sage-300">
+          <Card className="w-56 shadow-lg border-2 border-sage-300">
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-sm text-sage-700">Hulp Nodig?</CardTitle>
@@ -32,7 +40,7 @@ const WhatsAppButton = () => {
             </CardHeader>
             <CardContent className="pt-0">
               <p className="text-xs text-sage-600 mb-3">
-                Neem contact op voor persoonlijk advies over monumenten
+                Neem direct contact op voor hulp of advies. Binnen enkele uren beantwoord!
               </p>
               <Button 
                 onClick={handleWhatsAppClick}

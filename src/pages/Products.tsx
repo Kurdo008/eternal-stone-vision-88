@@ -1,15 +1,16 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Eye, ArrowRight, Filter } from 'lucide-react';
+import { Eye, ArrowRight, Filter, Euro, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedMaterial, setSelectedMaterial] = useState('all');
+  const [selectedPriceRange, setSelectedPriceRange] = useState('all');
 
   const products = [
     {
@@ -17,16 +18,19 @@ const Products = () => {
       name: "Klassieke Rechte Steen",
       category: "rechtop",
       material: "graniet",
-      price: "€ 1.250",
+      price: 1250,
+      priceFormatted: "€ 1.250",
       image: "/placeholder.svg",
-      description: "Elegante rechte grafsteen in donker graniet"
+      description: "Elegante rechte grafsteen in donker graniet",
+      images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"]
     },
     {
       id: 2,
       name: "Hartvorm Monument",
       category: "speciaal",
       material: "marmer",
-      price: "€ 1.850",
+      price: 1850,
+      priceFormatted: "€ 1.850",
       image: "/placeholder.svg",
       description: "Liefdevol hartvormig monument in wit marmer"
     },
@@ -35,7 +39,8 @@ const Products = () => {
       name: "Liggende Familie Steen",
       category: "liggend",
       material: "graniet",
-      price: "€ 2.100",
+      price: 2100,
+      priceFormatted: "€ 2.100",
       image: "/placeholder.svg",
       description: "Ruime liggende steen voor meerdere personen"
     },
@@ -44,7 +49,8 @@ const Products = () => {
       name: "Moderne Minimalistische Steen",
       category: "rechtop",
       material: "basalt",
-      price: "€ 1.650",
+      price: 1650,
+      priceFormatted: "€ 1.650",
       image: "/placeholder.svg",
       description: "Strak moderne vormgeving in zwart basalt"
     },
@@ -53,7 +59,8 @@ const Products = () => {
       name: "Traditionele Kruis Vorm",
       category: "speciaal",
       material: "zandsteen",
-      price: "€ 1.450",
+      price: 1450,
+      priceFormatted: "€ 1.450",
       image: "/placeholder.svg",
       description: "Klassieke kruisvorm in natuurlijke zandsteen"
     },
@@ -62,7 +69,8 @@ const Products = () => {
       name: "Dubbele Rechte Steen",
       category: "rechtop",
       material: "graniet",
-      price: "€ 1.950",
+      price: 1950,
+      priceFormatted: "€ 1.950",
       image: "/placeholder.svg",
       description: "Dubbele steen voor twee personen"
     }
@@ -83,37 +91,46 @@ const Products = () => {
     { value: 'zandsteen', label: 'Zandsteen' }
   ];
 
+  const priceRanges = [
+    { value: 'all', label: 'Alle Prijzen' },
+    { value: '0-1000', label: '€ 0 - € 1.000' },
+    { value: '1000-2000', label: '€ 1.000 - € 2.000' },
+    { value: '2000-3000', label: '€ 2.000 - € 3.000' },
+    { value: '3000+', label: '€ 3.000+' }
+  ];
+
   const filteredProducts = products.filter(product => {
     const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
     const materialMatch = selectedMaterial === 'all' || product.material === selectedMaterial;
-    return categoryMatch && materialMatch;
+    const priceRangeMatch = selectedPriceRange === 'all' || product.priceFormatted.includes(selectedPriceRange);
+    return categoryMatch && materialMatch && priceRangeMatch;
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-sage-50 to-moss-50">
       <Header />
       
       {/* Hero Section */}
-      <section className="py-16 px-4 bg-stone-gray text-white">
+      <section className="py-16 px-4 nature-gradient text-white">
         <div className="container mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-4">Onze Monument Collectie</h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Onze Monument Collectie</h1>
+          <p className="text-lg md:text-xl text-sage-100 max-w-2xl mx-auto">
             Ontdek onze uitgebreide collectie grafmonumenten, elk met zorg vervaardigd en beschikbaar in 3D
           </p>
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="py-8 px-4 bg-white border-b">
+      {/* Enhanced Filters */}
+      <section className="py-8 px-4 bg-white border-b border-sage-200">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div className="flex items-center gap-2">
-              <Filter className="h-5 w-5 text-stone-gray" />
-              <span className="font-medium text-stone-gray">Filters:</span>
+              <Filter className="h-5 w-5 text-sage-600" />
+              <span className="font-medium text-sage-700">Filters:</span>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-48 border-sage-300 focus:border-sage-500">
                   <SelectValue placeholder="Categorie" />
                 </SelectTrigger>
                 <SelectContent>
@@ -126,13 +143,26 @@ const Products = () => {
               </Select>
               
               <Select value={selectedMaterial} onValueChange={setSelectedMaterial}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-48 border-sage-300 focus:border-sage-500">
                   <SelectValue placeholder="Materiaal" />
                 </SelectTrigger>
                 <SelectContent>
                   {materials.map((material) => (
                     <SelectItem key={material.value} value={material.value}>
                       {material.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={selectedPriceRange} onValueChange={setSelectedPriceRange}>
+                <SelectTrigger className="w-48 border-sage-300 focus:border-sage-500">
+                  <SelectValue placeholder="Prijsklasse" />
+                </SelectTrigger>
+                <SelectContent>
+                  {priceRanges.map((range) => (
+                    <SelectItem key={range.value} value={range.value}>
+                      {range.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -175,7 +205,7 @@ const Products = () => {
                     <span className="text-sm font-medium text-bronze bg-bronze/10 px-3 py-1 rounded-full">
                       {materials.find(m => m.value === product.material)?.label}
                     </span>
-                    <span className="text-2xl font-bold text-stone-gray">{product.price}</span>
+                    <span className="text-2xl font-bold text-stone-gray">{product.priceFormatted}</span>
                   </div>
                 </CardContent>
                 
@@ -204,25 +234,24 @@ const Products = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 px-4 memorial-gradient text-white">
+      {/* Updated CTA Section */}
+      <section className="py-16 px-4 bg-sage-800 text-white">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">Niet Gevonden Wat U Zoekt?</h2>
-          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-sage-200 mb-8 max-w-2xl mx-auto">
             Wij maken ook volledig op maat gemaakte monumenten. Neem contact met ons op voor de mogelijkheden.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-bronze hover:bg-bronze/90 text-stone-gray"
+              className="bg-sage-600 hover:bg-sage-700 text-white border-none"
               asChild
             >
               <Link to="/contact">Contact Opnemen</Link>
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
-              className="border-2 border-white text-white hover:bg-white hover:text-stone-gray"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-sage-700"
               asChild
             >
               <Link to="/editor">Start Custom Design</Link>
@@ -230,6 +259,8 @@ const Products = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import CollectionShowcase from '@/components/CollectionShowcase';
 import Professional3DViewer from '@/components/Professional3DViewer';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   const craftFeatures = [
@@ -54,13 +55,12 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sage-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-sage-50 to-moss-50">
       <Header />
       
-      {/* Hero Section with Image */}
+      {/* Hero Section with Background Image */}
       <section className="relative py-20 px-4 nature-gradient text-white overflow-hidden">
         <div className="absolute inset-0 nature-texture"></div>
-        {/* Hero background image overlay */}
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{
@@ -78,7 +78,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
             <Button 
               size="lg" 
-              className="bg-slate-600 hover:bg-slate-700 text-white font-semibold px-8 py-4 text-lg"
+              className="bg-white hover:bg-sage-50 text-sage-800 font-semibold px-8 py-4 text-lg border-none"
               asChild
             >
               <Link to="/products">
@@ -87,8 +87,7 @@ const Index = () => {
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
-              className="border-2 border-white text-white hover:bg-white hover:text-sage-700 px-8 py-4 text-lg"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-sage-700 px-8 py-4 text-lg"
               asChild
             >
               <Link to="/editor">Start 3D Ontwerp</Link>
@@ -100,73 +99,45 @@ const Index = () => {
       {/* Collection Showcase */}
       <CollectionShowcase />
 
-      {/* Craftsmanship Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-sage-50 to-moss-50">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-sage-700 mb-4">
-              Waar Ambacht & Natuur Samenkomen
-            </h2>
-            <p className="text-xl text-sage-600 max-w-2xl mx-auto">
-              Ontdek hoe wij traditionele technieken combineren met respect voor de natuurlijke schoonheid
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {craftFeatures.map((feature, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300 border-2 hover:border-sage-300/50 bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-8">
-                  <div className="bg-sage-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <feature.icon className="h-8 w-8 text-sage-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-sage-700 mb-3">{feature.title}</h3>
-                  <p className="text-sage-600">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Enhanced 3D Preview Section */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 px-4 bg-gradient-to-br from-white to-sage-50">
         <div className="container mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-sage-700 mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-sage-700 mb-6">
                 Ervaar Uw Monument in 3D
               </h2>
-              <p className="text-lg text-sage-600 mb-8">
+              <p className="text-base md:text-lg text-sage-600 mb-8">
                 Onze geavanceerde 3D technologie stelt u in staat om uw monument 
                 van alle kanten te bekijken en aan te passen voordat het wordt vervaardigd.
               </p>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center text-sage-700">
+              <ul className="space-y-3 md:space-y-4 mb-8">
+                <li className="flex items-center text-sage-700 text-sm md:text-base">
                   <div className="w-2 h-2 bg-sage-600 rounded-full mr-3"></div>
                   360° weergave van uw monument
                 </li>
-                <li className="flex items-center text-sage-700">
+                <li className="flex items-center text-sage-700 text-sm md:text-base">
                   <div className="w-2 h-2 bg-sage-600 rounded-full mr-3"></div>
                   Real-time materiaal voorbeelden
                 </li>
-                <li className="flex items-center text-sage-700">
+                <li className="flex items-center text-sage-700 text-sm md:text-base">
                   <div className="w-2 h-2 bg-sage-600 rounded-full mr-3"></div>
                   Instant tekst en gravure preview
                 </li>
-                <li className="flex items-center text-sage-700">
+                <li className="flex items-center text-sage-700 text-sm md:text-base">
                   <div className="w-2 h-2 bg-sage-600 rounded-full mr-3"></div>
                   Professionele visualisatie
                 </li>
               </ul>
               <Button 
                 size="lg" 
-                className="bg-slate-600 hover:bg-slate-700 text-white"
+                className="bg-sage-600 hover:bg-sage-700 text-white border-none"
                 asChild
               >
                 <Link to="/editor">Probeer 3D Editor</Link>
               </Button>
             </div>
-            <div className="bg-gradient-to-br from-sage-50 to-white p-4 rounded-xl shadow-lg">
+            <div className="bg-gradient-to-br from-sage-50 to-white p-2 md:p-4 rounded-xl shadow-lg">
               <Professional3DViewer 
                 material="granite"
                 text="In Herinnering"
@@ -178,29 +149,57 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Memorial Gallery */}
-      <section className="py-20 px-4 bg-gradient-to-br from-moss-50 to-sage-50">
+      {/* Craftsmanship Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-moss-50 to-sage-100">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-sage-700 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-sage-700 mb-4">
+              Waar Ambacht & Natuur Samenkomen
+            </h2>
+            <p className="text-lg md:text-xl text-sage-600 max-w-2xl mx-auto">
+              Ontdek hoe wij traditionele technieken combineren met respect voor de natuurlijke schoonheid
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+            {craftFeatures.map((feature, index) => (
+              <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300 border-2 hover:border-sage-300/50 bg-white/80 backdrop-blur-sm">
+                <CardContent className="p-4 md:p-8">
+                  <div className="bg-sage-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                    <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-sage-600" />
+                  </div>
+                  <h3 className="text-sm md:text-xl font-semibold text-sage-700 mb-2 md:mb-3">{feature.title}</h3>
+                  <p className="text-xs md:text-base text-sage-600">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Memorial Gallery */}
+      <section className="py-20 px-4 bg-gradient-to-br from-sage-50 to-moss-50">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-sage-700 mb-4">
               Herinneringen in Steen
             </h2>
-            <p className="text-xl text-sage-600 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-sage-600 max-w-2xl mx-auto">
               Ontdek onze unieke benadering van monumenten die leven en natuur eren
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {memorialGallery.map((item, index) => (
               <Card key={index} className="overflow-hidden border-2 hover:border-sage-300/50 transition-colors group bg-white/80 backdrop-blur-sm">
                 <div className="aspect-square bg-gradient-to-br from-sage-100 to-sage-200 relative overflow-hidden">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <item.icon className="h-20 w-20 text-sage-500 group-hover:text-sage-600 transition-colors" />
+                    <item.icon className="h-16 w-16 md:h-20 md:w-20 text-sage-500 group-hover:text-sage-600 transition-colors" />
                   </div>
                 </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold text-sage-700 mb-3">{item.title}</h3>
-                  <p className="text-sage-600">{item.description}</p>
+                <CardContent className="p-4 md:p-6">
+                  <h3 className="text-lg md:text-xl font-semibold text-sage-700 mb-3">{item.title}</h3>
+                  <p className="text-sm md:text-base text-sage-600">{item.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -212,23 +211,23 @@ const Index = () => {
       <section className="py-20 px-4 bg-white">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-sage-700 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-sage-700 mb-4">
               Bezoek Onze Showroom
             </h2>
-            <p className="text-xl text-sage-600 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-sage-600 max-w-2xl mx-auto">
               Kom langs en ervaar de kwaliteit van onze monumenten persoonlijk
             </p>
           </div>
           
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="space-y-4 md:space-y-6">
               <div className="flex items-start space-x-4">
                 <div className="bg-sage-600 p-3 rounded-lg">
-                  <MapPin className="h-6 w-6 text-white" />
+                  <MapPin className="h-5 w-5 md:h-6 md:w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-sage-700 mb-2">Adres</h3>
-                  <p className="text-sage-600">
+                  <h3 className="text-lg md:text-xl font-semibold text-sage-700 mb-2">Adres</h3>
+                  <p className="text-sm md:text-base text-sage-600">
                     Monumentenstraat 123<br />
                     1234 AB Amsterdam<br />
                     Nederland
@@ -238,11 +237,11 @@ const Index = () => {
               
               <div className="flex items-start space-x-4">
                 <div className="bg-sage-600 p-3 rounded-lg">
-                  <Clock className="h-6 w-6 text-white" />
+                  <Clock className="h-5 w-5 md:h-6 md:w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-sage-700 mb-2">Openingstijden</h3>
-                  <p className="text-sage-600">
+                  <h3 className="text-lg md:text-xl font-semibold text-sage-700 mb-2">Openingstijden</h3>
+                  <p className="text-sm md:text-base text-sage-600">
                     Maandag - Vrijdag: 9:00 - 17:00<br />
                     Zaterdag: 10:00 - 16:00<br />
                     Zondag: Gesloten
@@ -252,11 +251,11 @@ const Index = () => {
               
               <div className="flex items-start space-x-4">
                 <div className="bg-sage-600 p-3 rounded-lg">
-                  <Phone className="h-6 w-6 text-white" />
+                  <Phone className="h-5 w-5 md:h-6 md:w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-sage-700 mb-2">Contact</h3>
-                  <p className="text-sage-600">
+                  <h3 className="text-lg md:text-xl font-semibold text-sage-700 mb-2">Contact</h3>
+                  <p className="text-sm md:text-base text-sage-600">
                     Telefoon: +31 20 123 4567<br />
                     Email: info@eternummonuments.nl
                   </p>
@@ -264,11 +263,11 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="bg-white p-8 rounded-xl shadow-lg">
+            <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
               <div className="aspect-video bg-gradient-to-br from-sage-100 to-sage-200 rounded-lg flex items-center justify-center">
                 <div className="text-center">
-                  <MapPin className="h-16 w-16 text-sage-600 mx-auto mb-4" />
-                  <p className="text-sage-600">Interactieve kaart wordt hier geladen</p>
+                  <MapPin className="h-12 w-12 md:h-16 md:w-16 text-sage-600 mx-auto mb-4" />
+                  <p className="text-sm md:text-base text-sage-600">Interactieve kaart wordt hier geladen</p>
                 </div>
               </div>
             </div>
@@ -276,25 +275,30 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 nature-gradient text-white">
-        <div className="container mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">Begin Vandaag Met Uw Monument</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-sage-100">
+      {/* CTA Section with Background Image */}
+      <section className="relative py-20 px-4 nature-gradient text-white">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop')"
+          }}
+        ></div>
+        <div className="container mx-auto text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Begin Vandaag Met Uw Monument</h2>
+          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-sage-100">
             Ontdek onze collectie of start direct met het ontwerpen van uw unieke monument
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-slate-600 hover:bg-slate-700 text-white font-semibold"
+              className="bg-white hover:bg-sage-50 text-sage-800 font-semibold border-none"
               asChild
             >
               <Link to="/products">Bekijk Producten</Link>
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
-              className="border-2 border-white text-white hover:bg-white hover:text-sage-700"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-sage-700"
               asChild
             >
               <Link to="/contact">Neem Contact Op</Link>
@@ -304,6 +308,7 @@ const Index = () => {
       </section>
 
       <WhatsAppButton />
+      <Footer />
     </div>
   );
 };

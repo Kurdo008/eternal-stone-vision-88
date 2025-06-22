@@ -1,11 +1,13 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Eye, ArrowRight, Filter, Euro, Package } from 'lucide-react';
+import { Eye, ArrowRight, Filter, Euro, Package, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -102,7 +104,13 @@ const Products = () => {
   const filteredProducts = products.filter(product => {
     const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
     const materialMatch = selectedMaterial === 'all' || product.material === selectedMaterial;
-    const priceRangeMatch = selectedPriceRange === 'all' || product.priceFormatted.includes(selectedPriceRange);
+    
+    let priceRangeMatch = true;
+    if (selectedPriceRange !== 'all') {
+      const [min, max] = selectedPriceRange.split('-').map(p => p === '3000+' ? Infinity : parseInt(p));
+      priceRangeMatch = product.price >= min && (max === undefined ? true : product.price <= max);
+    }
+    
     return categoryMatch && materialMatch && priceRangeMatch;
   });
 
@@ -111,26 +119,26 @@ const Products = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="py-16 px-4 nature-gradient text-white">
+      <section className="py-12 md:py-16 px-4 nature-gradient text-white">
         <div className="container mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Onze Monument Collectie</h1>
-          <p className="text-lg md:text-xl text-sage-100 max-w-2xl mx-auto">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Onze Monument Collectie</h1>
+          <p className="text-base md:text-lg lg:text-xl text-sage-100 max-w-2xl mx-auto">
             Ontdek onze uitgebreide collectie grafmonumenten, elk met zorg vervaardigd en beschikbaar in 3D
           </p>
         </div>
       </section>
 
       {/* Enhanced Filters */}
-      <section className="py-8 px-4 bg-white border-b border-sage-200">
+      <section className="py-6 px-4 bg-white border-b border-sage-200">
         <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             <div className="flex items-center gap-2">
               <Filter className="h-5 w-5 text-sage-600" />
               <span className="font-medium text-sage-700">Filters:</span>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-48 border-sage-300 focus:border-sage-500">
+                <SelectTrigger className="w-full sm:w-40 lg:w-44 border-sage-300 focus:border-sage-500 text-sm">
                   <SelectValue placeholder="Categorie" />
                 </SelectTrigger>
                 <SelectContent>
@@ -143,7 +151,7 @@ const Products = () => {
               </Select>
               
               <Select value={selectedMaterial} onValueChange={setSelectedMaterial}>
-                <SelectTrigger className="w-48 border-sage-300 focus:border-sage-500">
+                <SelectTrigger className="w-full sm:w-40 lg:w-44 border-sage-300 focus:border-sage-500 text-sm">
                   <SelectValue placeholder="Materiaal" />
                 </SelectTrigger>
                 <SelectContent>
@@ -156,7 +164,7 @@ const Products = () => {
               </Select>
 
               <Select value={selectedPriceRange} onValueChange={setSelectedPriceRange}>
-                <SelectTrigger className="w-48 border-sage-300 focus:border-sage-500">
+                <SelectTrigger className="w-full sm:w-40 lg:w-44 border-sage-300 focus:border-sage-500 text-sm">
                   <SelectValue placeholder="Prijsklasse" />
                 </SelectTrigger>
                 <SelectContent>
@@ -173,11 +181,11 @@ const Products = () => {
       </section>
 
       {/* Products Grid */}
-      <section className="py-12 px-4">
+      <section className="py-8 md:py-12 px-4">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
             {filteredProducts.map((product) => (
-              <Card key={product.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 hover:border-bronze/30">
+              <Card key={product.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 hover:border-sage-300/30">
                 <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative group">
                   <img 
                     src={product.image} 
@@ -187,46 +195,59 @@ const Products = () => {
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <Button
                       variant="outline"
-                      className="bg-white/90 text-stone-gray hover:bg-white"
+                      size="sm"
+                      className="bg-white/90 text-sage-700 hover:bg-white text-xs"
                       asChild
                     >
                       <Link to={`/editor?product=${product.id}`}>
-                        <Eye className="h-4 w-4 mr-2" />
-                        Bekijk in 3D
+                        <Eye className="h-3 w-3 mr-1" />
+                        3D Bekijken
                       </Link>
                     </Button>
                   </div>
                 </div>
                 
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold text-stone-gray mb-2">{product.name}</h3>
-                  <p className="text-gray-600 mb-4">{product.description}</p>
+                <CardContent className="p-3 md:p-4 lg:p-6">
+                  <h3 className="text-sm md:text-lg lg:text-xl font-semibold text-sage-700 mb-1 md:mb-2">{product.name}</h3>
+                  <p className="text-xs md:text-sm text-sage-600 mb-2 md:mb-4 line-clamp-2">{product.description}</p>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-bronze bg-bronze/10 px-3 py-1 rounded-full">
+                    <span className="text-xs md:text-sm font-medium text-sage-600 bg-sage-100 px-2 py-1 rounded-full">
                       {materials.find(m => m.value === product.material)?.label}
                     </span>
-                    <span className="text-2xl font-bold text-stone-gray">{product.priceFormatted}</span>
+                    <span className="text-lg md:text-xl lg:text-2xl font-bold text-sage-700">{product.priceFormatted}</span>
                   </div>
                 </CardContent>
                 
-                <CardFooter className="p-6 pt-0">
-                  <div className="flex gap-3 w-full">
+                <CardFooter className="p-3 md:p-4 lg:p-6 pt-0">
+                  <div className="flex gap-2 w-full">
                     <Button
                       variant="outline"
-                      className="flex-1 border-stone-gray text-stone-gray hover:bg-stone-gray hover:text-white"
+                      size="sm"
+                      className="flex-1 border-sage-600 text-sage-700 hover:bg-sage-50 text-xs"
                       asChild
                     >
                       <Link to={`/product/${product.id}`}>Details</Link>
                     </Button>
                     <Button
-                      className="flex-1 bg-bronze hover:bg-bronze/90 text-stone-gray"
+                      size="sm"
+                      className="flex-1 bg-forest-600 hover:bg-forest-700 text-white text-xs"
                       asChild
                     >
-                      <Link to={`/editor?product=${product.id}`}>
-                        3D Editor <ArrowRight className="h-4 w-4 ml-1" />
+                      <Link to={`/cart?add=${product.id}`}>
+                        <ShoppingCart className="h-3 w-3 mr-1" />
+                        Toevoegen
                       </Link>
                     </Button>
                   </div>
+                  <Button
+                    size="sm"
+                    className="w-full mt-2 bg-sage-600 hover:bg-sage-700 text-white text-xs"
+                    asChild
+                  >
+                    <Link to={`/editor?product=${product.id}`}>
+                      3D Editor <ArrowRight className="h-3 w-3 ml-1" />
+                    </Link>
+                  </Button>
                 </CardFooter>
               </Card>
             ))}
@@ -235,23 +256,29 @@ const Products = () => {
       </section>
 
       {/* Updated CTA Section */}
-      <section className="py-16 px-4 bg-sage-800 text-white">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Niet Gevonden Wat U Zoekt?</h2>
-          <p className="text-xl text-sage-200 mb-8 max-w-2xl mx-auto">
-            Wij maken ook volledig op maat gemaakte monumenten. Neem contact met ons op voor de mogelijkheden.
+      <section className="py-12 md:py-16 px-4 bg-gradient-to-br from-forest-600 to-forest-700 text-white relative">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=1920&h=1080&fit=crop')"
+          }}
+        ></div>
+        <div className="container mx-auto text-center relative z-10">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Niet Gevonden Wat U Zoekt?</h2>
+          <p className="text-base md:text-xl text-forest-200 mb-6 md:mb-8 max-w-2xl mx-auto">
+            Wij maken ook volledig op maat gemaakte monumenten.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-sage-600 hover:bg-sage-700 text-white border-none"
+              className="bg-forest-500 hover:bg-forest-600 text-white border-none"
               asChild
             >
               <Link to="/contact">Contact Opnemen</Link>
             </Button>
             <Button 
               size="lg" 
-              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-sage-700"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-forest-700"
               asChild
             >
               <Link to="/editor">Start Custom Design</Link>
@@ -260,6 +287,7 @@ const Products = () => {
         </div>
       </section>
 
+      <WhatsAppButton showPopup={false} />
       <Footer />
     </div>
   );

@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
-import { Save, Download, RotateCcw, Eye } from 'lucide-react';
+import { Save, Send, HelpCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import Monument3D from '@/components/Monument3D';
@@ -24,12 +24,6 @@ const Editor = () => {
     height: 80,
     depth: 15
   });
-
-  const shapes = [
-    { value: 'rectangular', label: 'Rechthoekig' },
-    { value: 'cross', label: 'Kruis' },
-    { value: 'heart', label: 'Hart' }
-  ];
 
   const materials = [
     { value: 'granite', label: 'Graniet' },
@@ -52,29 +46,18 @@ const Editor = () => {
     }));
   };
 
-  const handleSave = () => {
-    toast.success("Monument configuratie opgeslagen!");
-    console.log("Saved configuration:", monumentConfig);
+  const handleSaveConcept = () => {
+    toast.success("Concept opgeslagen!");
+    console.log("Saved concept:", monumentConfig);
   };
 
-  const handleExport = () => {
-    toast.success("3D model geëxporteerd als PDF!");
-    console.log("Exporting configuration:", monumentConfig);
+  const handleSendDesign = () => {
+    toast.success("Ontwerp verzonden! We nemen binnen 24 uur contact op.");
+    console.log("Sending design:", monumentConfig);
   };
 
-  const handleReset = () => {
-    setMonumentConfig({
-      shape: 'rectangular',
-      material: 'granite',
-      color: '#4a4a4a',
-      text: 'In Loving Memory',
-      fontSize: 'medium',
-      textColor: '#333333',
-      width: 60,
-      height: 80,
-      depth: 15
-    });
-    toast.info("Configuratie gereset naar standaardwaarden");
+  const handleHelp = () => {
+    toast.info("Voor vragen kunt u contact opnemen via WhatsApp of telefoon");
   };
 
   return (
@@ -97,7 +80,6 @@ const Editor = () => {
             <Card className="h-full">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Eye className="h-5 w-5" />
                   3D Voorvertoning
                 </CardTitle>
               </CardHeader>
@@ -109,20 +91,33 @@ const Editor = () => {
                   color={monumentConfig.color}
                 />
                 
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <Button onClick={handleSave} className="bg-green-600 hover:bg-green-700">
-                    <Save className="h-4 w-4 mr-2" />
-                    Opslaan
-                  </Button>
-                  <Button onClick={handleExport} variant="outline">
-                    <Download className="h-4 w-4 mr-2" />
-                    Exporteer PDF
-                  </Button>
-                  <Button onClick={handleReset} variant="outline">
-                    <RotateCcw className="h-4 w-4 mr-2" />
-                    Reset
-                  </Button>
-                </div>
+                {/* Price under 3D monument */}
+                <Card className="mt-6 border-bronze/30 bg-gradient-to-r from-bronze/5 to-stone-gray/5">
+                  <CardContent className="pt-6">
+                    <div className="text-center">
+                      <div className="text-3xl font-bold text-stone-gray mb-2">
+                        € 1.850
+                      </div>
+                      <p className="text-sm text-gray-600 mb-4">
+                        Inclusief gravure en plaatsing
+                      </p>
+                      <div className="flex flex-wrap gap-3 justify-center">
+                        <Button onClick={handleHelp} variant="outline" className="flex items-center gap-2">
+                          <HelpCircle className="h-4 w-4" />
+                          Hulp
+                        </Button>
+                        <Button onClick={handleSendDesign} className="bg-bronze hover:bg-bronze/90 text-stone-gray">
+                          <Send className="h-4 w-4 mr-2" />
+                          Verstuur Ontwerp
+                        </Button>
+                        <Button onClick={handleSaveConcept} variant="outline">
+                          <Save className="h-4 w-4 mr-2" />
+                          Concept Opslaan
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </CardContent>
             </Card>
           </div>
@@ -130,32 +125,16 @@ const Editor = () => {
           {/* Configuration Panel */}
           <div className="space-y-6">
             
-            {/* Shape Configuration */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Vorm & Materiaal</CardTitle>
+            {/* Material & Color Configuration */}
+            <Card className="border-2 border-bronze/20 shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-bronze/10 to-stone-gray/10">
+                <CardTitle className="text-stone-gray">Materiaal & Kleur</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6 pt-6">
                 <div>
-                  <Label htmlFor="shape">Vorm</Label>
-                  <Select value={monumentConfig.shape} onValueChange={(value) => handleConfigChange('shape', value)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {shapes.map((shape) => (
-                        <SelectItem key={shape.value} value={shape.value}>
-                          {shape.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label htmlFor="material">Materiaal</Label>
+                  <Label htmlFor="material" className="text-base font-semibold">Materiaal</Label>
                   <Select value={monumentConfig.material} onValueChange={(value) => handleConfigChange('material', value)}>
-                    <SelectTrigger>
+                    <SelectTrigger className="mt-2 h-12">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -169,9 +148,9 @@ const Editor = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="color">Kleur</Label>
+                  <Label htmlFor="color" className="text-base font-semibold">Kleur</Label>
                   <Select value={monumentConfig.color} onValueChange={(value) => handleConfigChange('color', value)}>
-                    <SelectTrigger>
+                    <SelectTrigger className="mt-2 h-12">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -192,33 +171,40 @@ const Editor = () => {
               </CardContent>
             </Card>
 
-            {/* Text Configuration */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Tekst & Gravure</CardTitle>
+            {/* Luxurious Text Configuration */}
+            <Card className="border-2 border-bronze/20 shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-bronze/10 to-stone-gray/10">
+                <CardTitle className="text-stone-gray">Tekst & Gravure</CardTitle>
+                <p className="text-sm text-gray-600 mt-2">Personaliseer uw monument met een betekenisvolle tekst</p>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6 pt-6">
                 <div>
-                  <Label htmlFor="text">Tekst</Label>
+                  <Label htmlFor="text" className="text-base font-semibold">Uw Tekst</Label>
                   <Textarea
                     id="text"
                     value={monumentConfig.text}
                     onChange={(e) => handleConfigChange('text', e.target.value)}
-                    placeholder="Voer uw tekst in..."
-                    rows={3}
+                    placeholder="Voer uw persoonlijke tekst in..."
+                    rows={4}
+                    className="mt-2 resize-none"
                   />
+                  <p className="text-xs text-gray-500 mt-2">Tip: Korte, betekenisvolle teksten werken het beste</p>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Dimensions */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Afmetingen (cm)</CardTitle>
+            {/* Dimensions with Standard Info */}
+            <Card className="border-2 border-bronze/20 shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-bronze/10 to-stone-gray/10">
+                <CardTitle className="text-stone-gray">Afmetingen</CardTitle>
+                <p className="text-sm text-gray-600 mt-2">
+                  Standaard afmeting: 60 x 80 x 15 cm<br/>
+                  <span className="text-xs">Aanpassingen mogelijk op verzoek</span>
+                </p>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 pt-6">
                 <div>
-                  <Label htmlFor="width">Breedte</Label>
+                  <Label htmlFor="width" className="text-base font-semibold">Breedte (cm)</Label>
                   <Input
                     id="width"
                     type="number"
@@ -226,10 +212,11 @@ const Editor = () => {
                     onChange={(e) => handleConfigChange('width', parseInt(e.target.value))}
                     min={30}
                     max={120}
+                    className="mt-2 h-12"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="height">Hoogte</Label>
+                  <Label htmlFor="height" className="text-base font-semibold">Hoogte (cm)</Label>
                   <Input
                     id="height"
                     type="number"
@@ -237,10 +224,11 @@ const Editor = () => {
                     onChange={(e) => handleConfigChange('height', parseInt(e.target.value))}
                     min={40}
                     max={150}
+                    className="mt-2 h-12"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="depth">Diepte</Label>
+                  <Label htmlFor="depth" className="text-base font-semibold">Diepte (cm)</Label>
                   <Input
                     id="depth"
                     type="number"
@@ -248,30 +236,8 @@ const Editor = () => {
                     onChange={(e) => handleConfigChange('depth', parseInt(e.target.value))}
                     min={8}
                     max={30}
+                    className="mt-2 h-12"
                   />
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Price Estimate */}
-            <Card className="border-bronze/30">
-              <CardHeader>
-                <CardTitle className="text-bronze">Prijs Indicatie</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-stone-gray mb-2">
-                    € 1.850
-                  </div>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Inclusief gravure en plaatsing
-                  </p>
-                  <Button 
-                    className="w-full bg-bronze hover:bg-bronze/90 text-stone-gray"
-                    onClick={() => toast.success("Offerte aangevraagd! We nemen binnen 24 uur contact op.")}
-                  >
-                    Vraag Offerte Aan
-                  </Button>
                 </div>
               </CardContent>
             </Card>

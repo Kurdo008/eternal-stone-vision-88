@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Mountain, ShoppingCart, Palette } from 'lucide-react';
@@ -103,18 +104,18 @@ const Header = () => {
             )}
           </div>
 
-          {/* Right side actions - Mobile optimized */}
-          <div className="flex items-center justify-end space-x-1 md:space-x-4 min-w-0">
+          {/* Right side actions - Fixed alignment */}
+          <div className="flex items-center space-x-1 md:space-x-4">
             <Button 
               variant="ghost" 
               size="sm"
-              className="text-sage-600 hover:text-sage-700 hover:bg-sage-50 p-2 flex-shrink-0"
+              className="text-sage-600 hover:text-sage-700 hover:bg-sage-50 p-2"
               onClick={() => navigate('/cart')}
             >
               <ShoppingCart className="h-5 w-5" />
             </Button>
             <Button 
-              className="bg-gradient-to-r from-sage-600 to-sage-700 hover:from-sage-700 hover:to-sage-800 text-white font-medium px-3 md:px-6 py-2 text-sm shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg border-2 border-sage-500/20 flex-shrink-0"
+              className="bg-gradient-to-r from-sage-600 to-sage-700 hover:from-sage-700 hover:to-sage-800 text-white font-medium px-3 md:px-6 py-2 text-sm shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg border-2 border-sage-500/20"
               asChild
             >
               <Link to="/contact">
@@ -128,7 +129,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Collections bar - Mobile optimized */}
+      {/* Collections bar - Light colors */}
       <div className="bg-sage-50 border-t border-sage-200">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center space-x-2 md:space-x-8 py-3 overflow-x-auto">
@@ -136,7 +137,7 @@ const Header = () => {
               <Link
                 key={collection.name}
                 to={collection.path}
-                className="text-xs md:text-sm font-medium whitespace-nowrap transition-colors flex items-center text-white bg-sage-600 px-2 md:px-3 py-1 rounded-full hover:bg-sage-700"
+                className="text-xs md:text-sm font-medium whitespace-nowrap transition-colors flex items-center text-sage-700 bg-sage-200 hover:bg-sage-300 px-2 md:px-3 py-1 rounded-full"
               >
                 {collection.name === '3D Ontwerp' && <Palette className="h-3 w-3 md:h-4 md:w-4 mr-1" />}
                 {collection.name}

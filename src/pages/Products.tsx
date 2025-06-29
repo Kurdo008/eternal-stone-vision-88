@@ -94,6 +94,31 @@ const Products = () => {
   });
 
   const handleAddToCart = (product: typeof products[0]) => {
+    // Get existing cart items from localStorage
+    const existingCart = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    
+    // Check if product already exists in cart
+    const existingItemIndex = existingCart.findIndex((item: any) => item.id === product.id);
+    
+    if (existingItemIndex > -1) {
+      // Increase quantity if item exists
+      existingCart[existingItemIndex].quantity += 1;
+    } else {
+      // Add new item to cart
+      const cartItem = {
+        id: product.id,
+        name: product.name,
+        material: materials.find(m => m.value === product.material)?.label || product.material,
+        price: product.price,
+        quantity: 1,
+        image: product.image
+      };
+      existingCart.push(cartItem);
+    }
+    
+    // Save updated cart to localStorage
+    localStorage.setItem('cartItems', JSON.stringify(existingCart));
+    
     toast({
       title: "Product toegevoegd!",
       description: `${product.name} is toegevoegd aan uw winkelwagen`,

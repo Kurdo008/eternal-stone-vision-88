@@ -10,25 +10,25 @@ const CollectionShowcase = () => {
       name: 'Graniet',
       description: 'Duurzaam en elegant graniet voor eeuwige monumenten',
       image: '/lovable-uploads/3d8bd79b-695c-4e81-a1f5-be4438c59390.png',
-      path: '/products?type=graniet'
+      path: '/products?category=rechtop&material=graniet'
     },
     {
       name: 'Marmer',
       description: 'Klassieke marmeren monumenten met tijdloze schoonheid',
       image: '/lovable-uploads/2de35e37-3622-499a-82ec-2df7299494e0.png',
-      path: '/products?type=marmer'
+      path: '/products?category=rechtop&material=marmer'
     },
     {
       name: 'Natuursteen',
       description: 'Authentieke natuursteen direct uit de natuur',
       image: '/lovable-uploads/f0ad3896-94f1-46b6-a5b1-abe90a55da80.png',
-      path: '/products?type=natuursteen'
+      path: '/products?category=rechtop&material=zandsteen'
     },
     {
       name: 'Modern',
       description: 'Moderne designs voor hedendaagse monumenten',
       image: '/lovable-uploads/71035eda-0c60-4379-a78a-b1ef9a736998.png',
-      path: '/products?type=modern'
+      path: '/products?category=speciaal'
     }
   ];
 
@@ -46,7 +46,7 @@ const CollectionShowcase = () => {
         
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {collections.map((collection, index) => (
-            <Card key={index} className="overflow-hidden border-2 hover:border-sage-300/50 transition-colors group">
+            <Card key={index} className="overflow-hidden border-2 hover:border-sage-300/50 transition-colors group h-full flex flex-col">
               <div className="aspect-square bg-gradient-to-br from-sage-100 to-sage-200 relative overflow-hidden">
                 <img 
                   src={collection.image} 
@@ -54,14 +54,16 @@ const CollectionShowcase = () => {
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <CardContent className="p-3 md:p-4 lg:p-6">
-                <h3 className="text-sm md:text-lg lg:text-xl font-semibold text-sage-700 mb-1 md:mb-2">{collection.name}</h3>
-                <p className="text-xs md:text-sm text-sage-600 mb-3 md:mb-4 line-clamp-2">{collection.description}</p>
+              <CardContent className="p-3 md:p-4 lg:p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-sm md:text-lg lg:text-xl font-semibold text-sage-700 mb-1 md:mb-2">{collection.name}</h3>
+                  <p className="text-xs md:text-sm text-sage-600 mb-3 md:mb-4 line-clamp-2">{collection.description}</p>
+                </div>
                 <Button 
                   asChild
                   variant="outline" 
                   size="sm"
-                  className="w-full border-sage-300 text-sage-700 hover:bg-sage-50 text-xs"
+                  className="w-full border-sage-300 text-white bg-sage-600 hover:bg-sage-700 text-xs mt-auto"
                 >
                   <Link to={collection.path}>
                     Bekijk Collectie <ArrowRight className="ml-1 h-3 w-3" />

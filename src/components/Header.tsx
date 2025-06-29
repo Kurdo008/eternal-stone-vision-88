@@ -47,11 +47,11 @@ const Header = () => {
   };
 
   const collections = [
-    { name: 'Graniet', path: '/products?type=graniet' },
-    { name: 'Marmer', path: '/products?type=marmer' },
-    { name: 'Natuursteen', path: '/products?type=natuursteen' },
-    { name: 'Modern', path: '/products?type=modern' },
-    { name: 'Klassiek', path: '/products?type=klassiek' },
+    { name: 'Graniet', path: '/products?category=rechtop&material=graniet' },
+    { name: 'Marmer', path: '/products?category=rechtop&material=marmer' },
+    { name: 'Natuursteen', path: '/products?category=rechtop&material=zandsteen' },
+    { name: 'Modern', path: '/products?category=speciaal' },
+    { name: 'Klassiek', path: '/products?category=rechtop' },
     { name: '3D Ontwerp', path: '/editor', isSpecial: true }
   ];
 
@@ -115,10 +115,15 @@ const Header = () => {
               <ShoppingCart className="h-5 w-5" />
             </Button>
             <Button 
-              className="bg-sage-600 hover:bg-sage-700 text-white font-medium px-2 md:px-4 py-2 text-sm"
+              className="bg-gradient-to-r from-sage-600 to-sage-700 hover:from-sage-700 hover:to-sage-800 text-white font-medium px-3 md:px-6 py-2 text-sm shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg border-2 border-sage-500/20"
               asChild
             >
-              <Link to="/contact">Contact</Link>
+              <Link to="/contact">
+                <span className="flex items-center">
+                  Contact
+                  <div className="ml-2 w-2 h-2 bg-white/30 rounded-full"></div>
+                </span>
+              </Link>
             </Button>
           </div>
         </div>
@@ -134,8 +139,8 @@ const Header = () => {
                 to={collection.path}
                 className={`text-xs md:text-sm font-medium whitespace-nowrap transition-colors flex items-center ${
                   collection.isSpecial 
-                    ? 'text-sage-800 bg-sage-200 px-2 md:px-3 py-1 rounded-full hover:bg-sage-300' 
-                    : 'text-sage-600 hover:text-sage-800'
+                    ? 'text-white bg-sage-600 px-2 md:px-3 py-1 rounded-full hover:bg-sage-700' 
+                    : 'text-sage-600 hover:text-sage-800 bg-sage-200/50 px-2 md:px-3 py-1 rounded-full hover:bg-sage-300/50'
                 }`}
               >
                 {collection.isSpecial && <Palette className="h-3 w-3 md:h-4 md:w-4 mr-1" />}

@@ -34,7 +34,7 @@ const WhatsAppButton = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       {/* Auto Popup */}
       <div className={`mb-3 bg-sage-600 text-white px-4 py-3 rounded-lg shadow-xl transition-all duration-500 max-w-64 ${showPopup ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
         <div className="flex items-center space-x-2">

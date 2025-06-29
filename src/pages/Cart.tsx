@@ -1,23 +1,14 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
+import { Minus, Plus, Trash2, ShoppingBag, Palette, Wrench } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Klassieke Rechte Steen",
-      price: 1250,
-      quantity: 1,
-      image: "/placeholder.svg",
-      material: "Graniet"
-    }
-  ]);
+  const [cartItems, setCartItems] = useState([]);
 
   const updateQuantity = (id: number, newQuantity: number) => {
     if (newQuantity === 0) {
@@ -114,14 +105,62 @@ const Cart = () => {
                       </div>
                     </div>
                   </div>
-                  <Button className="w-full bg-sage-600 hover:bg-sage-700 text-white">
-                    Bestelling Plaatsen
+                  <Button asChild className="w-full bg-sage-600 hover:bg-sage-700 text-white">
+                    <Link to="/checkout">Bestelling Plaatsen</Link>
                   </Button>
                 </CardContent>
               </Card>
             </div>
           </div>
         )}
+
+        {/* Nieuwe sectie voor meer opties */}
+        <section className="mt-16 py-12 px-4 bg-gradient-to-br from-sage-100 to-sage-200 rounded-xl">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-sage-700 mb-4">
+              Meer Mogelijkheden
+            </h2>
+            <p className="text-sage-600 max-w-2xl mx-auto">
+              Ontdek onze uitgebreide collectie of maak uw eigen unieke ontwerp
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="bg-sage-600 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <ShoppingBag className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-sage-700 mb-2">Meer Grafstenen</h3>
+                <p className="text-sage-600 mb-4">
+                  Bekijk onze volledige collectie van hoogwaardige grafstenen en monumenten
+                </p>
+                <Button asChild className="bg-sage-600 hover:bg-sage-700 text-white">
+                  <Link to="/products">
+                    Bekijk Collectie
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="bg-forest-600 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <Palette className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-sage-700 mb-2">Eigen Ontwerp Maken</h3>
+                <p className="text-sage-600 mb-4">
+                  Maak uw eigen unieke monument met onze 3D editor
+                </p>
+                <Button asChild className="bg-forest-600 hover:bg-forest-700 text-white">
+                  <Link to="/editor">
+                    Start 3D Editor
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
       </div>
       
       <Footer />

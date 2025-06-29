@@ -63,7 +63,7 @@ const CollectionShowcase = () => {
                   asChild
                   variant="outline" 
                   size="sm"
-                  className="w-full border-sage-300 text-white bg-sage-600 hover:bg-sage-700 text-xs mt-auto"
+                  className="w-full border-sage-600 text-white bg-sage-600 hover:bg-sage-700 hover:border-sage-700 text-xs mt-auto"
                 >
                   <Link to={collection.path}>
                     Bekijk Collectie <ArrowRight className="ml-1 h-3 w-3" />

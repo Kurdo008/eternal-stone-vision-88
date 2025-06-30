@@ -13,17 +13,24 @@ serve(async (req) => {
   }
 
   try {
+    console.log('=== CREATE CHECKOUT SESSION START ===')
+    
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
     )
 
     const { orderData, cartItems } = await req.json()
+    console.log('Received data:', { orderData, cartItems })
     
-    // Create order in database
+    // Create order in database - use string IDs instead of UUIDs
+    const orderId = crypto.randomUUID()
+    console.log('Generated order ID:', orderId)
+    
     const { data: order, error: orderError } = await supabaseClient
       .from('orders')
       .insert([{
+        id: orderId,
         email: orderData.email,
         total_amount: orderData.total,
         shipping_address: {
@@ -39,21 +46,33 @@ serve(async (req) => {
       .select()
       .single()
 
-    if (orderError) throw orderError
+    if (orderError) {
+      console.error('Order creation error:', orderError)
+      throw orderError
+    }
+    
+    console.log('Order created:', order)
 
-    // Add order items
+    // Add order items - generate UUIDs for product_id
     const orderItems = cartItems.map((item: any) => ({
-      order_id: order.id,
-      product_id: item.id,
+      order_id: orderId,
+      product_id: crypto.randomUUID(), // Generate a UUID instead of using item.id directly
       quantity: item.quantity,
       price: item.price
     }))
+
+    console.log('Order items to insert:', orderItems)
 
     const { error: itemsError } = await supabaseClient
       .from('order_items')
       .insert(orderItems)
 
-    if (itemsError) throw itemsError
+    if (itemsError) {
+      console.error('Order items error:', itemsError)
+      throw itemsError
+    }
+
+    console.log('Order items created successfully')
 
     // Create Stripe checkout session
     const stripe = new (await import('https://esm.sh/stripe@12.18.0')).default(
@@ -74,6 +93,8 @@ serve(async (req) => {
       quantity: item.quantity,
     }))
 
+    console.log('Stripe line items:', lineItems)
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card', 'ideal'],
       line_items: lineItems,
@@ -81,19 +102,24 @@ serve(async (req) => {
       success_url: `${req.headers.get('origin')}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get('origin')}/checkout`,
       metadata: {
-        order_id: order.id,
+        order_id: orderId,
       },
       customer_email: orderData.email,
     })
+
+    console.log('Stripe session created:', session.id)
 
     // Update order with Stripe session ID
     await supabaseClient
       .from('orders')
       .update({ stripe_session_id: session.id })
-      .eq('id', order.id)
+      .eq('id', orderId)
+
+    console.log('Order updated with session ID')
+    console.log('=== CREATE CHECKOUT SESSION END ===')
 
     return new Response(
-      JSON.stringify({ sessionId: session.id, orderId: order.id }),
+      JSON.stringify({ sessionId: session.id, orderId: orderId }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200,
@@ -101,7 +127,7 @@ serve(async (req) => {
     )
 
   } catch (error) {
-    console.error('Error:', error)
+    console.error('Error in create-checkout-session:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
       { 

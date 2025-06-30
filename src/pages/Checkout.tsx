@@ -50,8 +50,6 @@ const Checkout = () => {
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const btw = subtotal * 0.21;
-  const total = subtotal + btw;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,25 +77,32 @@ const Checkout = () => {
     setIsLoading(true);
 
     try {
+      console.log('Sending order data:', { formData, cartItems, total: subtotal });
+      
       // Create checkout session
       const { data, error } = await supabase.functions.invoke('create-checkout-session', {
         body: {
           orderData: {
             ...formData,
-            total: total
+            total: subtotal
           },
           cartItems
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+
+      console.log('Checkout session response:', data);
 
       // Redirect to Stripe Checkout
       const stripe = await import('@stripe/stripe-js').then(m => 
         m.loadStripe('pk_test_51RfPiJ1TfGR3VtghRzxxwlqF2xVysMCPOn8i0lUnh2qssWvfcLy2wuE7SvJVhivi6yHosrVLKcHuzgfELKDJeOQF008CSSP2D5')
       );
 
-      if (stripe) {
+      if (stripe && data?.sessionId) {
         const { error: stripeError } = await stripe.redirectToCheckout({
           sessionId: data.sessionId
         });
@@ -105,6 +110,8 @@ const Checkout = () => {
         if (stripeError) {
           throw stripeError;
         }
+      } else {
+        throw new Error('Stripe niet geladen of geen sessie ID ontvangen');
       }
     } catch (error: any) {
       console.error('Checkout error:', error);
@@ -259,16 +266,12 @@ const Checkout = () => {
                     <span>€ {subtotal.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>BTW (21%):</span>
-                    <span>€ {btw.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
                     <span>Verzendkosten:</span>
                     <span>Gratis</span>
                   </div>
                   <div className="flex justify-between font-bold text-lg border-t pt-2">
                     <span>Totaal:</span>
-                    <span>€ {total.toLocaleString()}</span>
+                    <span>€ {subtotal.toLocaleString()}</span>
                   </div>
                 </div>
 

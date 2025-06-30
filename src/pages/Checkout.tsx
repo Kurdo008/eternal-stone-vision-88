@@ -50,6 +50,8 @@ const Checkout = () => {
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const btw = subtotal * 0.21;
+  const total = subtotal + btw;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,7 +84,7 @@ const Checkout = () => {
         body: {
           orderData: {
             ...formData,
-            total: subtotal
+            total: total
           },
           cartItems
         }
@@ -92,10 +94,7 @@ const Checkout = () => {
 
       // Redirect to Stripe Checkout
       const stripe = await import('@stripe/stripe-js').then(m => 
-        m.loadStripe(process.env.NODE_ENV === 'production' 
-          ? 'pk_live_...' // Add your live publishable key here
-          : 'pk_test_51234567890abcdef...' // Add your test publishable key here
-        )
+        m.loadStripe('pk_test_51RfPiJ1TfGR3VtghRzxxwlqF2xVysMCPOn8i0lUnh2qssWvfcLy2wuE7SvJVhivi6yHosrVLKcHuzgfELKDJeOQF008CSSP2D5')
       );
 
       if (stripe) {
@@ -255,13 +254,21 @@ const Checkout = () => {
                 </div>
 
                 <div className="space-y-2 mb-6 border-t pt-4">
-                  <div className="flex justify-between font-bold text-lg">
+                  <div className="flex justify-between">
                     <span>Subtotaal:</span>
                     <span>€ {subtotal.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between text-sm text-sage-600">
+                  <div className="flex justify-between">
+                    <span>BTW (21%):</span>
+                    <span>€ {btw.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
                     <span>Verzendkosten:</span>
                     <span>Gratis</span>
+                  </div>
+                  <div className="flex justify-between font-bold text-lg border-t pt-2">
+                    <span>Totaal:</span>
+                    <span>€ {total.toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -272,7 +279,7 @@ const Checkout = () => {
                   size="lg"
                 >
                   <ShoppingCart className="h-4 w-4 mr-2" />
-                  {isLoading ? 'Verwerken...' : 'Doorgaan naar Betaling'}
+                  {isLoading ? 'Verwerken...' : 'Veilig Betalen'}
                 </Button>
 
                 <div className="text-center mt-4">

@@ -53,7 +53,7 @@ serve(async (req) => {
     
     console.log('Order created:', order)
 
-    // Skip order_items creation to avoid foreign key constraint error
+    // Skip order_items creation to avoid foreign key constraint
     console.log('Skipping order_items creation to avoid foreign key constraint')
 
     // Create Stripe checkout session
@@ -62,18 +62,42 @@ serve(async (req) => {
       { apiVersion: '2023-10-16' }
     )
 
-    const lineItems = cartItems.map((item: any) => ({
-      price_data: {
-        currency: 'eur',
-        product_data: {
-          name: item.name,
-          description: item.material,
-          images: item.image ? [item.image] : [],
+    // Helper function to validate URL
+    const isValidUrl = (url: string): boolean => {
+      try {
+        new URL(url)
+        return true
+      } catch {
+        return false
+      }
+    }
+
+    const lineItems = cartItems.map((item: any) => {
+      console.log('Processing item:', item)
+      
+      // Only include image if it's a valid URL
+      const productData: any = {
+        name: item.name,
+        description: item.material,
+      }
+      
+      // Only add images if the URL is valid
+      if (item.image && isValidUrl(item.image)) {
+        productData.images = [item.image]
+        console.log('Added valid image URL:', item.image)
+      } else {
+        console.log('Skipping invalid image URL:', item.image)
+      }
+
+      return {
+        price_data: {
+          currency: 'eur',
+          product_data: productData,
+          unit_amount: Math.round(item.price * 100), // Convert to cents
         },
-        unit_amount: Math.round(item.price * 100), // Convert to cents
-      },
-      quantity: item.quantity,
-    }))
+        quantity: item.quantity,
+      }
+    })
 
     console.log('Stripe line items:', lineItems)
 

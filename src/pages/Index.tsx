@@ -44,7 +44,7 @@ const Index = () => {
       {/* Collection Showcase */}
       <CollectionShowcase />
 
-      {/* 3D Experience Section - Mobile optimized */}
+      {/* 3D Experience Section */}
       <section className="py-12 md:py-16 px-4 bg-gradient-to-br from-sage-100 to-sage-200">
         <div className="container mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
@@ -89,15 +89,87 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Why Choose Us */}
+      {/* Process Section */}
       <section className="py-12 md:py-16 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-sage-700 mb-4">
-              Waarom Kiezen voor Eternum Monuments?
+              Ons Proces
             </h2>
             <p className="text-base md:text-lg text-sage-600 max-w-2xl mx-auto">
-              Al meer dan 25 jaar helpen wij families bij het creëren van waardige herinneringen
+              Van eerste ontwerp tot plaatsing - wij begeleiden u door elke stap
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            <Card className="text-center">
+              <CardHeader>
+                <div className="w-12 h-12 bg-sage-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold">1</span>
+                </div>
+                <CardTitle className="text-lg md:text-xl text-sage-700">Ontwerp</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm md:text-base text-sage-600">
+                  Samen bespreken we uw wensen en maken we een eerste ontwerp.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="text-center">
+              <CardHeader>
+                <div className="w-12 h-12 bg-sage-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold">2</span>
+                </div>
+                <CardTitle className="text-lg md:text-xl text-sage-700">Materiaal</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm md:text-base text-sage-600">
+                  Kies uit hoogwaardige materialen zoals graniet, marmer en natuursteen.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center">
+              <CardHeader>
+                <div className="w-12 h-12 bg-sage-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold">3</span>
+                </div>
+                <CardTitle className="text-lg md:text-xl text-sage-700">Productie</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm md:text-base text-sage-600">
+                  Onze vakmensen vervaardigen het monument met de grootste zorg.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center">
+              <CardHeader>
+                <div className="w-12 h-12 bg-sage-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold">4</span>
+                </div>
+                <CardTitle className="text-lg md:text-xl text-sage-700">Plaatsing</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm md:text-base text-sage-600">
+                  Wij zorgen voor professionele plaatsing op de gewenste locatie.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-12 md:py-16 px-4 bg-gradient-to-br from-sage-100 to-sage-200">
+        <div className="container mx-auto">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-sage-700 mb-4">
+              Wat Ons Onderscheidt
+            </h2>
+            <p className="text-base md:text-lg text-sage-600 max-w-2xl mx-auto">
+              Meer dan 25 jaar ervaring in het creëren van waardige monumenten
             </p>
           </div>
           
@@ -138,21 +210,22 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section - Updated */}
       <section className="py-12 md:py-16 px-4 bg-gradient-to-br from-sage-600 to-sage-700 text-white">
         <div className="container mx-auto text-center">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">
-            Klaar om te Beginnen?
+            Niet gevonden wat u zoekt?
           </h2>
           <p className="text-base md:text-xl text-sage-100 mb-6 md:mb-8 max-w-2xl mx-auto">
-            Neem contact met ons op voor een vrijblijvend gesprek over uw wensen.
+            Wij maken ook volledig op maat gemaakte monumenten. 
+            Neem contact met ons op voor een persoonlijk advies.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-white text-sage-700 hover:bg-gray-100" asChild>
-              <Link to="/contact">Contact Opnemen</Link>
+              <Link to="/contact">Persoonlijk Advies</Link>
             </Button>
             <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-sage-700" asChild>
-              <Link to="/products">Bekijk Voorbeelden</Link>
+              <Link to="/editor">3D Editor Proberen</Link>
             </Button>
           </div>
         </div>

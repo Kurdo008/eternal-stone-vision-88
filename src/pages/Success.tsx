@@ -30,8 +30,10 @@ const Success = () => {
               body: { orderId: data.id }
             });
             
-            // Clear cart
+            // Clear cart and any saved address data
             localStorage.removeItem('cartItems');
+            localStorage.removeItem('checkoutAddress');
+            localStorage.removeItem('customerAddress');
             setOrderSent(true);
           }
         } catch (error) {
@@ -42,6 +44,13 @@ const Success = () => {
 
     sendOrderConfirmation();
   }, [sessionId, orderSent]);
+
+  // Also clear cart on component mount as backup
+  useEffect(() => {
+    localStorage.removeItem('cartItems');
+    localStorage.removeItem('checkoutAddress');
+    localStorage.removeItem('customerAddress');
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-sage-50 to-moss-50">

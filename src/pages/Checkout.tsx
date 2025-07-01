@@ -1,28 +1,43 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { CreditCard, Lock, ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { supabase } from '@/integrations/supabase/client';
+
+interface CartItem {
+  id: number;
+  name: string;
+  material: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
 
 const Checkout = () => {
+  const { toast } = useToast();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
     lastName: '',
-    address: '',
-    city: '',
-    zipCode: '',
-    phone: '',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
-    cardName: ''
+    phone: ''
   });
+
+  // Load cart items from localStorage on component mount
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cartItems');
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -31,10 +46,79 @@ const Checkout = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Hier zou de echte betaalverwerking plaatsvinden
-    alert('Betaling wordt verwerkt...');
+    
+    if (cartItems.length === 0) {
+      toast({
+        title: "Winkelwagen leeg",
+        description: "Voeg eerst producten toe aan uw winkelwagen.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate form - only contact details now
+    if (!formData.email || !formData.firstName || !formData.lastName || !formData.phone) {
+      toast({
+        title: "Vul alle velden in",
+        description: "Alle contactgegevens zijn verplicht.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      console.log('Sending order data:', { formData, cartItems, total: subtotal });
+      
+      // Create checkout session
+      const { data, error } = await supabase.functions.invoke('create-checkout-session', {
+        body: {
+          orderData: {
+            ...formData,
+            total: subtotal
+          },
+          cartItems
+        }
+      });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+
+      console.log('Checkout session response:', data);
+
+      // Redirect to Stripe Checkout
+      const stripe = await import('@stripe/stripe-js').then(m => 
+        m.loadStripe('pk_test_51RfPiJ1TfGR3VtghRzxxwlqF2xVysMCPOn8i0lUnh2qssWvfcLy2wuE7SvJVhivi6yHosrVLKcHuzgfELKDJeOQF008CSSP2D5')
+      );
+
+      if (stripe && data?.sessionId) {
+        const { error: stripeError } = await stripe.redirectToCheckout({
+          sessionId: data.sessionId
+        });
+
+        if (stripeError) {
+          throw stripeError;
+        }
+      } else {
+        throw new Error('Stripe niet geladen of geen sessie ID ontvangen');
+      }
+    } catch (error: any) {
+      console.error('Checkout error:', error);
+      toast({
+        title: "Fout bij bestelling",
+        description: error.message || "Er is iets misgegaan. Probeer het opnieuw.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -54,15 +138,18 @@ const Checkout = () => {
         <h1 className="text-3xl font-bold text-sage-700 mb-8">Bestelling Afrekenen</h1>
         
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Bestelformulier */}
+          {/* Bestelformulier - Alleen contactgegevens */}
           <div className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="text-sage-700">Contactgegevens</CardTitle>
+                <p className="text-sm text-sage-600">
+                  Na uw bestelling nemen wij contact met u op voor de verdere details en afspraken.
+                </p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="email">E-mailadres</Label>
+                  <Label htmlFor="email">E-mailadres *</Label>
                   <Input
                     id="email"
                     name="email"
@@ -70,127 +157,60 @@ const Checkout = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="uw.email@voorbeeld.nl"
+                    required
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="firstName">Voornaam</Label>
+                    <Label htmlFor="firstName">Voornaam *</Label>
                     <Input
                       id="firstName"
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
+                      required
                     />
                   </div>
                   <div>
-                    <Label htmlFor="lastName">Achternaam</Label>
+                    <Label htmlFor="lastName">Achternaam *</Label>
                     <Input
                       id="lastName"
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
+                      required
                     />
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="phone">Telefoonnummer</Label>
+                  <Label htmlFor="phone">Telefoonnummer *</Label>
                   <Input
                     id="phone"
                     name="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={handleInputChange}
+                    placeholder="06 12345678"
+                    required
                   />
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sage-700">Adresgegevens</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="address">Adres</Label>
-                  <Input
-                    id="address"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                    placeholder="Straat en huisnummer"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="city">Plaats</Label>
-                    <Input
-                      id="city"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleInputChange}
-                    />
+            <Card className="border-sage-200 bg-sage-50">
+              <CardContent className="pt-6">
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 rounded-full bg-sage-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-white text-xs font-bold">i</span>
                   </div>
                   <div>
-                    <Label htmlFor="zipCode">Postcode</Label>
-                    <Input
-                      id="zipCode"
-                      name="zipCode"
-                      value={formData.zipCode}
-                      onChange={handleInputChange}
-                      placeholder="1234 AB"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sage-700 flex items-center">
-                  <CreditCard className="h-5 w-5 mr-2" />
-                  Betaalgegevens
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="cardName">Naam op kaart</Label>
-                  <Input
-                    id="cardName"
-                    name="cardName"
-                    value={formData.cardName}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="cardNumber">Kaartnummer</Label>
-                  <Input
-                    id="cardNumber"
-                    name="cardNumber"
-                    value={formData.cardNumber}
-                    onChange={handleInputChange}
-                    placeholder="1234 5678 9012 3456"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="expiryDate">Vervaldatum</Label>
-                    <Input
-                      id="expiryDate"
-                      name="expiryDate"
-                      value={formData.expiryDate}
-                      onChange={handleInputChange}
-                      placeholder="MM/JJ"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="cvv">CVV</Label>
-                    <Input
-                      id="cvv"
-                      name="cvv"
-                      value={formData.cvv}
-                      onChange={handleInputChange}
-                      placeholder="123"
-                    />
+                    <h4 className="font-medium text-sage-700 mb-1">Wat gebeurt er na uw bestelling?</h4>
+                    <ul className="text-sm text-sage-600 space-y-1">
+                      <li>• Wij nemen binnen 24 uur contact met u op</li>
+                      <li>• Samen bespreken we alle details van uw monument</li>
+                      <li>• U ontvangt een persoonlijk advies op maat</li>
+                      <li>• Wij regelen de plaatsing en installatie</li>
+                    </ul>
                   </div>
                 </div>
               </CardContent>
@@ -204,39 +224,42 @@ const Checkout = () => {
                 <CardTitle className="text-sage-700">Bestelling Overzicht</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between text-sm">
-                    <span>Subtotaal:</span>
-                    <span>€ 0</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>BTW (21%):</span>
-                    <span>€ 0</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Verzendkosten:</span>
-                    <span>Gratis</span>
-                  </div>
-                  <div className="border-t pt-4">
-                    <div className="flex justify-between font-bold text-lg">
-                      <span>Totaal:</span>
-                      <span>€ 0</span>
+                {/* Cart items */}
+                <div className="space-y-3 mb-6">
+                  {cartItems.map((item) => (
+                    <div key={item.id} className="flex justify-between items-center text-sm">
+                      <div className="flex-1">
+                        <p className="font-medium">{item.name}</p>
+                        <p className="text-sage-600">{item.material} × {item.quantity}</p>
+                      </div>
+                      <span className="font-medium">€ {(item.price * item.quantity).toLocaleString()}</span>
                     </div>
+                  ))}
+                </div>
+
+                <div className="space-y-2 mb-6 border-t pt-4">
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>Totaal:</span>
+                    <span>€ {subtotal.toLocaleString()}</span>
                   </div>
+                  <p className="text-xs text-sage-500 text-center">
+                    Inclusief persoonlijk advies en maatwerk
+                  </p>
                 </div>
 
                 <Button 
                   onClick={handleSubmit}
+                  disabled={isLoading || cartItems.length === 0}
                   className="w-full bg-sage-600 hover:bg-sage-700 text-white flex items-center justify-center"
                   size="lg"
                 >
-                  <Lock className="h-4 w-4 mr-2" />
-                  Veilig Betalen
+                  <ShoppingCart className="h-4 w-4 mr-2" />
+                  {isLoading ? 'Verwerken...' : 'Veilig Betalen'}
                 </Button>
 
                 <div className="text-center mt-4">
                   <p className="text-xs text-sage-500">
-                    Uw betaling wordt veilig verwerkt met SSL-encryptie
+                    U wordt doorgestuurd naar een veilige betaalpagina
                   </p>
                 </div>
               </CardContent>

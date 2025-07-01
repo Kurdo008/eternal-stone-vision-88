@@ -6,20 +6,20 @@ const WhatsAppButton = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    // Show popup after 5 seconds
+    // Show popup after 8 seconds (increased from 5)
     const timer = setTimeout(() => {
       setShowPopup(true);
-    }, 5000);
+    }, 8000);
 
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    // Hide popup after 3 seconds of showing
+    // Hide popup after 4 seconds of showing (increased from 3)
     if (showPopup) {
       const hideTimer = setTimeout(() => {
         setShowPopup(false);
-      }, 3000);
+      }, 4000);
 
       return () => clearTimeout(hideTimer);
     }
@@ -34,24 +34,24 @@ const WhatsAppButton = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-      {/* Auto Popup */}
-      <div className={`mb-3 bg-sage-600 text-white px-4 py-3 rounded-lg shadow-xl transition-all duration-500 max-w-64 ${showPopup ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
+    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end">
+      {/* Auto Popup - Positioned directly above button with more spacing */}
+      <div className={`mb-4 bg-sage-600 text-white px-4 py-3 rounded-lg shadow-xl transition-all duration-500 max-w-64 ${showPopup ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
         <div className="flex items-center space-x-2">
           <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
           <p className="text-sm font-medium">Hulp nodig?</p>
         </div>
         <p className="text-xs text-sage-100 mt-1">Klik hier voor directe hulp via WhatsApp!</p>
-        <div className="absolute bottom-0 right-4 transform translate-y-1">
+        <div className="absolute -bottom-1 right-4 transform">
           <div className="w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-t-4 border-t-sage-600"></div>
         </div>
       </div>
 
       {/* Hover Tooltip */}
-      <div className={`mb-3 bg-sage-600 text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-300 ${showTooltip && !showPopup ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
+      <div className={`mb-2 bg-sage-600 text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-300 ${showTooltip && !showPopup ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
         <p className="text-sm font-medium">Hulp nodig?</p>
         <p className="text-xs">Neem direct contact op!</p>
-        <div className="absolute bottom-0 right-4 transform translate-y-1">
+        <div className="absolute -bottom-1 right-4 transform">
           <div className="w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-t-4 border-t-sage-600"></div>
         </div>
       </div>

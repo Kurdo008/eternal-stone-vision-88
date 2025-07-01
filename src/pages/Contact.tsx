@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -73,14 +73,14 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-sage-50 to-moss-50">
       <Header />
       
       {/* Hero Section */}
-      <section className="py-16 px-4 memorial-gradient text-white">
+      <section className="py-16 px-4 nature-gradient text-white">
         <div className="container mx-auto text-center">
           <h1 className="text-5xl font-bold mb-4">Contact</h1>
-          <p className="text-xl text-gray-200 max-w-2xl mx-auto">
+          <p className="text-xl text-sage-100 max-w-2xl mx-auto">
             Heeft u vragen over onze monumenten of wilt u een vrijblijvende offerte? 
             Neem gerust contact met ons op.
           </p>
@@ -94,7 +94,7 @@ const Contact = () => {
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
-                <CardTitle className="text-2xl text-stone-gray">Stuur ons een bericht</CardTitle>
+                <CardTitle className="text-2xl text-sage-700">Stuur ons een bericht</CardTitle>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -165,7 +165,7 @@ const Contact = () => {
                   <Button 
                     type="submit" 
                     size="lg" 
-                    className="w-full bg-bronze hover:bg-bronze/90 text-stone-gray"
+                    className="w-full bg-sage-600 hover:bg-sage-700 text-white"
                   >
                     Bericht Versturen
                   </Button>
@@ -180,12 +180,12 @@ const Contact = () => {
               <Card key={index}>
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className="bg-bronze/10 p-3 rounded-lg">
-                      <info.icon className="h-6 w-6 text-bronze" />
+                    <div className="bg-sage-600/10 p-3 rounded-lg">
+                      <info.icon className="h-6 w-6 text-sage-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-stone-gray mb-2">{info.title}</h3>
-                      <p className="text-gray-600 whitespace-pre-line">{info.content}</p>
+                      <h3 className="font-semibold text-sage-700 mb-2">{info.title}</h3>
+                      <p className="text-sage-600 whitespace-pre-line">{info.content}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -209,14 +209,14 @@ const Contact = () => {
         <div className="mt-12">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl text-stone-gray">Locatie</CardTitle>
+              <CardTitle className="text-2xl text-sage-700">Locatie</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
                 <div className="text-center">
-                  <MapPin className="h-16 w-16 text-stone-gray mx-auto mb-4" />
-                  <p className="text-gray-600">Interactieve kaart wordt hier geladen</p>
-                  <p className="text-sm text-gray-500 mt-2">Monumentenweg 123, Arnhem</p>
+                  <MapPin className="h-16 w-16 text-sage-600 mx-auto mb-4" />
+                  <p className="text-sage-600">Interactieve kaart wordt hier geladen</p>
+                  <p className="text-sm text-sage-500 mt-2">Monumentenweg 123, Arnhem</p>
                 </div>
               </div>
             </CardContent>
@@ -227,27 +227,27 @@ const Contact = () => {
         <div className="mt-12">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl text-stone-gray">Veelgestelde Vragen</CardTitle>
+              <CardTitle className="text-2xl text-sage-700">Veelgestelde Vragen</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-semibold text-stone-gray mb-2">Hoe lang duurt het maken van een monument?</h4>
-                  <p className="text-gray-600">
+                  <h4 className="font-semibold text-sage-700 mb-2">Hoe lang duurt het maken van een monument?</h4>
+                  <p className="text-sage-600">
                     De levertijd is gemiddeld 4-6 weken na goedkeuring van het ontwerp. 
                     Dit kan variëren afhankelijk van de complexiteit en het gekozen materiaal.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-stone-gray mb-2">Kan ik mijn monument eerst in 3D bekijken?</h4>
-                  <p className="text-gray-600">
+                  <h4 className="font-semibold text-sage-700 mb-2">Kan ik mijn monument eerst in 3D bekijken?</h4>
+                  <p className="text-sage-600">
                     Ja! Met onze 3D editor kunt u uw monument volledig configureren en bekijken 
                     voordat u een bestelling plaatst. U ontvangt ook een gedetailleerde 3D visualisatie.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-stone-gray mb-2">Bieden jullie ook plaatsing aan?</h4>
-                  <p className="text-gray-600">
+                  <h4 className="font-semibold text-sage-700 mb-2">Bieden jullie ook plaatsing aan?</h4>
+                  <p className="text-sage-600">
                     Ja, wij verzorgen de volledige plaatsing van het monument inclusief fundering 
                     en aansluiting. Dit wordt uitgevoerd door onze ervaren vakmensen.
                   </p>
@@ -257,6 +257,8 @@ const Contact = () => {
           </Card>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

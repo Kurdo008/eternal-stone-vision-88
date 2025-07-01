@@ -104,7 +104,7 @@ const Header = () => {
             )}
           </div>
 
-          {/* Right side actions - Fixed alignment */}
+          {/* Right side actions - Mobile optimized */}
           <div className="flex items-center space-x-1 md:space-x-4">
             <Button 
               variant="ghost" 
@@ -119,7 +119,7 @@ const Header = () => {
               asChild
             >
               <Link to="/contact">
-                <span className="flex items-center whitespace-nowrap">
+                <span className="flex items-center">
                   Contact
                   <div className="ml-2 w-2 h-2 bg-white/30 rounded-full"></div>
                 </span>
@@ -129,7 +129,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Collections bar - Light colors */}
+      {/* Collections bar - Mobile optimized */}
       <div className="bg-sage-50 border-t border-sage-200">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center space-x-2 md:space-x-8 py-3 overflow-x-auto">
@@ -137,9 +137,13 @@ const Header = () => {
               <Link
                 key={collection.name}
                 to={collection.path}
-                className="text-xs md:text-sm font-medium whitespace-nowrap transition-colors flex items-center text-sage-700 bg-sage-200 hover:bg-sage-300 px-2 md:px-3 py-1 rounded-full"
+                className={`text-xs md:text-sm font-medium whitespace-nowrap transition-colors flex items-center ${
+                  collection.isSpecial 
+                    ? 'text-white bg-sage-600 px-2 md:px-3 py-1 rounded-full hover:bg-sage-700' 
+                    : 'text-sage-600 hover:text-sage-800 bg-sage-200/50 px-2 md:px-3 py-1 rounded-full hover:bg-sage-300/50'
+                }`}
               >
-                {collection.name === '3D Ontwerp' && <Palette className="h-3 w-3 md:h-4 md:w-4 mr-1" />}
+                {collection.isSpecial && <Palette className="h-3 w-3 md:h-4 md:w-4 mr-1" />}
                 {collection.name}
               </Link>
             ))}

@@ -28,9 +28,6 @@ const Checkout = () => {
     email: '',
     firstName: '',
     lastName: '',
-    address: '',
-    city: '',
-    zipCode: '',
     phone: ''
   });
 
@@ -63,12 +60,11 @@ const Checkout = () => {
       return;
     }
 
-    // Validate form
-    if (!formData.email || !formData.firstName || !formData.lastName || 
-        !formData.address || !formData.city || !formData.zipCode || !formData.phone) {
+    // Validate form - only contact details now
+    if (!formData.email || !formData.firstName || !formData.lastName || !formData.phone) {
       toast({
         title: "Vul alle velden in",
-        description: "Alle contactgegevens en adresgegevens zijn verplicht.",
+        description: "Alle contactgegevens zijn verplicht.",
         variant: "destructive"
       });
       return;
@@ -142,11 +138,14 @@ const Checkout = () => {
         <h1 className="text-3xl font-bold text-sage-700 mb-8">Bestelling Afrekenen</h1>
         
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Bestelformulier */}
+          {/* Bestelformulier - Alleen contactgegevens */}
           <div className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="text-sage-700">Contactgegevens</CardTitle>
+                <p className="text-sm text-sage-600">
+                  Na uw bestelling nemen wij contact met u op voor de verdere details en afspraken.
+                </p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -191,49 +190,27 @@ const Checkout = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={handleInputChange}
+                    placeholder="06 12345678"
                     required
                   />
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sage-700">Adresgegevens</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="address">Adres *</Label>
-                  <Input
-                    id="address"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                    placeholder="Straat en huisnummer"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="city">Plaats *</Label>
-                    <Input
-                      id="city"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleInputChange}
-                      required
-                    />
+            <Card className="border-sage-200 bg-sage-50">
+              <CardContent className="pt-6">
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 rounded-full bg-sage-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-white text-xs font-bold">i</span>
                   </div>
                   <div>
-                    <Label htmlFor="zipCode">Postcode *</Label>
-                    <Input
-                      id="zipCode"
-                      name="zipCode"
-                      value={formData.zipCode}
-                      onChange={handleInputChange}
-                      placeholder="1234 AB"
-                      required
-                    />
+                    <h4 className="font-medium text-sage-700 mb-1">Wat gebeurt er na uw bestelling?</h4>
+                    <ul className="text-sm text-sage-600 space-y-1">
+                      <li>• Wij nemen binnen 24 uur contact met u op</li>
+                      <li>• Samen bespreken we alle details van uw monument</li>
+                      <li>• U ontvangt een persoonlijk advies op maat</li>
+                      <li>• Wij regelen de plaatsing en installatie</li>
+                    </ul>
                   </div>
                 </div>
               </CardContent>
@@ -261,18 +238,13 @@ const Checkout = () => {
                 </div>
 
                 <div className="space-y-2 mb-6 border-t pt-4">
-                  <div className="flex justify-between">
-                    <span>Subtotaal:</span>
-                    <span>€ {subtotal.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Verzendkosten:</span>
-                    <span>Gratis</span>
-                  </div>
-                  <div className="flex justify-between font-bold text-lg border-t pt-2">
+                  <div className="flex justify-between font-bold text-lg">
                     <span>Totaal:</span>
                     <span>€ {subtotal.toLocaleString()}</span>
                   </div>
+                  <p className="text-xs text-sage-500 text-center">
+                    Inclusief persoonlijk advies en maatwerk
+                  </p>
                 </div>
 
                 <Button 

@@ -36,9 +36,6 @@ serve(async (req) => {
         shipping_address: {
           firstName: orderData.firstName,
           lastName: orderData.lastName,
-          address: orderData.address,
-          city: orderData.city,
-          zipCode: orderData.zipCode,
           phone: orderData.phone
         },
         status: 'pending'

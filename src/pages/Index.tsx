@@ -65,15 +65,16 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-sage-50 to-moss-50">
       <Header />
       
-      {/* Hero Section with Background Image */}
+      {/* Hero Section with New Background Image */}
       <section className="relative py-12 md:py-16 px-4 nature-gradient text-white overflow-hidden">
         <div className="absolute inset-0 nature-texture"></div>
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30"
+          className="absolute inset-0 bg-cover bg-center opacity-40"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1472396961693-142e6e269027?w=1920&h=1080&fit=crop')"
+            backgroundImage: "url('/lovable-uploads/beeaa2a1-9459-4d64-8e20-3f0373aabc46.png')"
           }}
         ></div>
+        <div className="absolute inset-0 bg-sage-600/30"></div>
         <div className="container mx-auto text-center relative z-10">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-6 animate-fade-in leading-tight">
             <span className="block sm:inline">Waardige Monumenten</span>

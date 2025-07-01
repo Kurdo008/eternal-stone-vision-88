@@ -47,11 +47,11 @@ const Header = () => {
   };
 
   const collections = [
-    { name: 'Graniet', path: '/products?category=rechtop&material=graniet' },
-    { name: 'Marmer', path: '/products?category=rechtop&material=marmer' },
-    { name: 'Natuursteen', path: '/products?category=rechtop&material=zandsteen' },
-    { name: 'Modern', path: '/products?category=speciaal' },
-    { name: 'Klassiek', path: '/products?category=rechtop' },
+    { name: 'Graniet', path: '/products?type=graniet' },
+    { name: 'Marmer', path: '/products?type=marmer' },
+    { name: 'Natuursteen', path: '/products?type=natuursteen' },
+    { name: 'Modern', path: '/products?type=modern' },
+    { name: 'Klassiek', path: '/products?type=klassiek' },
     { name: '3D Ontwerp', path: '/editor', isSpecial: true }
   ];
 
@@ -104,7 +104,7 @@ const Header = () => {
             )}
           </div>
 
-          {/* Right side actions - Fixed alignment */}
+          {/* Right side actions - Mobile optimized */}
           <div className="flex items-center space-x-1 md:space-x-4">
             <Button 
               variant="ghost" 
@@ -115,21 +115,16 @@ const Header = () => {
               <ShoppingCart className="h-5 w-5" />
             </Button>
             <Button 
-              className="bg-gradient-to-r from-sage-600 to-sage-700 hover:from-sage-700 hover:to-sage-800 text-white font-medium px-3 md:px-6 py-2 text-sm shadow-lg hover:shadow-xl transition-all duration-200 rounded-lg border-2 border-sage-500/20"
+              className="bg-sage-600 hover:bg-sage-700 text-white font-medium px-2 md:px-4 py-2 text-sm"
               asChild
             >
-              <Link to="/contact">
-                <span className="flex items-center whitespace-nowrap">
-                  Contact
-                  <div className="ml-2 w-2 h-2 bg-white/30 rounded-full"></div>
-                </span>
-              </Link>
+              <Link to="/contact">Contact</Link>
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Collections bar - Light colors */}
+      {/* Collections bar - Mobile optimized */}
       <div className="bg-sage-50 border-t border-sage-200">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center space-x-2 md:space-x-8 py-3 overflow-x-auto">
@@ -137,9 +132,13 @@ const Header = () => {
               <Link
                 key={collection.name}
                 to={collection.path}
-                className="text-xs md:text-sm font-medium whitespace-nowrap transition-colors flex items-center text-sage-700 bg-sage-200 hover:bg-sage-300 px-2 md:px-3 py-1 rounded-full"
+                className={`text-xs md:text-sm font-medium whitespace-nowrap transition-colors flex items-center ${
+                  collection.isSpecial 
+                    ? 'text-sage-800 bg-sage-200 px-2 md:px-3 py-1 rounded-full hover:bg-sage-300' 
+                    : 'text-sage-600 hover:text-sage-800'
+                }`}
               >
-                {collection.name === '3D Ontwerp' && <Palette className="h-3 w-3 md:h-4 md:w-4 mr-1" />}
+                {collection.isSpecial && <Palette className="h-3 w-3 md:h-4 md:w-4 mr-1" />}
                 {collection.name}
               </Link>
             ))}

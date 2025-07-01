@@ -1,18 +1,19 @@
 
 import { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { ArrowRight, ShoppingCart } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Eye, ArrowRight, Filter, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { useToast } from '@/hooks/use-toast';
 
 const Products = () => {
-  const [searchParams] = useSearchParams();
-  const selectedCategory = searchParams.get('category') || 'all';
-  const selectedMaterial = searchParams.get('material') || 'all';
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedMaterial, setSelectedMaterial] = useState('all');
+  const [selectedPriceRange, setSelectedPriceRange] = useState('all');
   const { toast } = useToast();
 
   const products = [
@@ -79,61 +80,47 @@ const Products = () => {
     }
   ];
 
+  const categories = [
+    { value: 'all', label: 'Alle Categorieën' },
+    { value: 'rechtop', label: 'Rechtopstaand' },
+    { value: 'liggend', label: 'Liggend' },
+    { value: 'speciaal', label: 'Speciale Vormen' }
+  ];
+
   const materials = [
+    { value: 'all', label: 'Alle Materialen' },
     { value: 'graniet', label: 'Graniet' },
     { value: 'marmer', label: 'Marmer' },
     { value: 'basalt', label: 'Basalt' },
     { value: 'zandsteen', label: 'Zandsteen' }
   ];
 
+  const priceRanges = [
+    { value: 'all', label: 'Alle Prijzen' },
+    { value: '0-1000', label: '€ 0 - € 1.000' },
+    { value: '1000-2000', label: '€ 1.000 - € 2.000' },
+    { value: '2000-3000', label: '€ 2.000 - € 3.000' },
+    { value: '3000+', label: '€ 3.000+' }
+  ];
+
   const filteredProducts = products.filter(product => {
     const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
     const materialMatch = selectedMaterial === 'all' || product.material === selectedMaterial;
     
-    return categoryMatch && materialMatch;
+    let priceRangeMatch = true;
+    if (selectedPriceRange !== 'all') {
+      const [min, max] = selectedPriceRange.split('-').map(p => p === '3000+' ? Infinity : parseInt(p));
+      priceRangeMatch = product.price >= min && (max === undefined ? true : product.price <= max);
+    }
+    
+    return categoryMatch && materialMatch && priceRangeMatch;
   });
 
   const handleAddToCart = (product: typeof products[0]) => {
-    // Get existing cart items from localStorage
-    const existingCart = JSON.parse(localStorage.getItem('cartItems') || '[]');
-    
-    // Check if product already exists in cart
-    const existingItemIndex = existingCart.findIndex((item: any) => item.id === product.id);
-    
-    if (existingItemIndex > -1) {
-      // Increase quantity if item exists
-      existingCart[existingItemIndex].quantity += 1;
-    } else {
-      // Add new item to cart
-      const cartItem = {
-        id: product.id,
-        name: product.name,
-        material: materials.find(m => m.value === product.material)?.label || product.material,
-        price: product.price,
-        quantity: 1,
-        image: product.image
-      };
-      existingCart.push(cartItem);
-    }
-    
-    // Save updated cart to localStorage
-    localStorage.setItem('cartItems', JSON.stringify(existingCart));
-    
     toast({
       title: "Product toegevoegd!",
       description: `${product.name} is toegevoegd aan uw winkelwagen`,
     });
-  };
-
-  const getFilterTitle = () => {
-    if (selectedMaterial !== 'all') {
-      const material = materials.find(m => m.value === selectedMaterial);
-      return `${material?.label} Monumenten`;
-    }
-    if (selectedCategory !== 'all') {
-      return `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Monumenten`;
-    }
-    return 'Onze Monument Collectie';
   };
 
   return (
@@ -149,10 +136,62 @@ const Products = () => {
           }}
         ></div>
         <div className="container mx-auto text-center relative z-10">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">{getFilterTitle()}</h1>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">Onze Monument Collectie</h1>
           <p className="text-sm md:text-lg text-sage-100 max-w-2xl mx-auto">
             Ontdek onze uitgebreide collectie grafmonumenten, elk met zorg vervaardigd en beschikbaar in 3D
           </p>
+        </div>
+      </section>
+
+      {/* Enhanced Filters */}
+      <section className="py-4 px-4 bg-white border-b border-sage-200">
+        <div className="container mx-auto">
+          <div className="flex flex-col lg:flex-row gap-3 items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-sage-600" />
+              <span className="font-medium text-sage-700 text-sm">Filters:</span>
+            </div>
+            <div className="grid grid-cols-3 gap-2 w-full lg:w-auto lg:flex lg:gap-3">
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-full lg:w-36 border-sage-300 focus:border-sage-500 text-xs">
+                  <SelectValue placeholder="Categorie" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category.value} value={category.value}>
+                      {category.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              <Select value={selectedMaterial} onValueChange={setSelectedMaterial}>
+                <SelectTrigger className="w-full lg:w-36 border-sage-300 focus:border-sage-500 text-xs">
+                  <SelectValue placeholder="Materiaal" />
+                </SelectTrigger>
+                <SelectContent>
+                  {materials.map((material) => (
+                    <SelectItem key={material.value} value={material.value}>
+                      {material.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={selectedPriceRange} onValueChange={setSelectedPriceRange}>
+                <SelectTrigger className="w-full lg:w-36 border-sage-300 focus:border-sage-500 text-xs">
+                  <SelectValue placeholder="Prijsklasse" />
+                </SelectTrigger>
+                <SelectContent>
+                  {priceRanges.map((range) => (
+                    <SelectItem key={range.value} value={range.value}>
+                      {range.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -161,19 +200,32 @@ const Products = () => {
         <div className="container mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
             {filteredProducts.map((product) => (
-              <Card key={product.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 hover:border-sage-300/30 h-full flex flex-col">
-                <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative">
+              <Card key={product.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 hover:border-sage-300/30">
+                <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative group">
                   <img 
                     src={product.image} 
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="bg-white/90 text-sage-700 hover:bg-white text-xs"
+                      asChild
+                    >
+                      <Link to={`/editor?product=${product.id}`}>
+                        <Eye className="h-3 w-3 mr-1" />
+                        3D Bekijken
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
                 
-                <CardContent className="p-3 md:p-4 lg:p-6 flex-1 flex flex-col">
+                <CardContent className="p-3 md:p-4 lg:p-6">
                   <h3 className="text-sm md:text-lg lg:text-xl font-semibold text-sage-700 mb-1 md:mb-2">{product.name}</h3>
-                  <p className="text-xs md:text-sm text-sage-600 mb-2 md:mb-4 line-clamp-2 flex-1">{product.description}</p>
-                  <div className="flex justify-between items-center mt-auto">
+                  <p className="text-xs md:text-sm text-sage-600 mb-2 md:mb-4 line-clamp-2">{product.description}</p>
+                  <div className="flex justify-between items-center">
                     <span className="text-xs md:text-sm font-medium text-sage-600 bg-sage-100 px-2 py-1 rounded-full">
                       {materials.find(m => m.value === product.material)?.label}
                     </span>
@@ -182,7 +234,7 @@ const Products = () => {
                 </CardContent>
                 
                 <CardFooter className="p-3 md:p-4 lg:p-6 pt-0">
-                  <div className="flex gap-2 w-full">
+                  <div className="flex gap-2 w-full mb-2">
                     <Button
                       size="sm"
                       className="flex-1 bg-forest-600 hover:bg-forest-700 text-white text-xs"
@@ -240,7 +292,7 @@ const Products = () => {
         </div>
       </section>
 
-      <WhatsAppButton />
+      <WhatsAppButton showPopup={false} />
       <Footer />
     </div>
   );

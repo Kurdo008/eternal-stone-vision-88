@@ -8,13 +8,13 @@ const CollectionShowcase = () => {
   const collections = [
     {
       name: 'Graniet',
-      description: 'Duurzaam en elegant graniet voor eeuwige monumenten',
+      description: 'Duurzaam en elegant graniet voor eeuwige gedenkstenen',
       image: '/lovable-uploads/3d8bd79b-695c-4e81-a1f5-be4438c59390.png',
       path: '/products?category=rechtop&material=graniet'
     },
     {
       name: 'Marmer',
-      description: 'Klassieke marmeren monumenten met tijdloze schoonheid',
+      description: 'Klassieke marmeren gedenkstenen met tijdloze schoonheid',
       image: '/lovable-uploads/2de35e37-3622-499a-82ec-2df7299494e0.png',
       path: '/products?category=rechtop&material=marmer'
     },
@@ -26,7 +26,7 @@ const CollectionShowcase = () => {
     },
     {
       name: 'Modern',
-      description: 'Moderne designs voor hedendaagse monumenten',
+      description: 'Moderne designs voor hedendaagse gedenkstenen',
       image: '/lovable-uploads/71035eda-0c60-4379-a78a-b1ef9a736998.png',
       path: '/products?category=speciaal'
     }
@@ -37,10 +37,10 @@ const CollectionShowcase = () => {
       <div className="container mx-auto">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-sage-700 mb-2 md:mb-4">
-            Onze Monument Collecties
+            Onze Gedenkstenen Collecties
           </h2>
           <p className="text-sm md:text-lg text-sage-600 max-w-2xl mx-auto">
-            Ontdek onze uitgebreide collectie van hoogwaardige monumenten
+            Ontdek onze uitgebreide collectie van hoogwaardige gedenkstenen
           </p>
         </div>
         

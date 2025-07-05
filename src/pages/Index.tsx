@@ -30,7 +30,7 @@ const Index = () => {
     {
       icon: Palette,
       title: "Persoonlijke Verhalen",
-      description: "Elk monument vertelt een uniek verhaal"
+      description: "Elk stuk vertelt een uniek verhaal"
     }
   ];
 
@@ -38,7 +38,7 @@ const Index = () => {
     {
       image: "/api/placeholder/300/300",
       title: "Tuin Herinneringen",
-      description: "Monumenten in harmonie met natuur",
+      description: "Gedenkstenen in harmonie met natuur",
       icon: TreePine
     },
     {
@@ -77,7 +77,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-sage-600/30"></div>
         <div className="container mx-auto text-center relative z-10">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-6 animate-fade-in leading-tight">
-            <span className="block sm:inline">Waardige Monumenten</span>
+            <span className="block sm:inline">Prachtige Gedenkstenen</span>
             <span className="block text-sage-200 text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-1 sm:mt-0 sm:ml-2">in Harmonie met de Natuur</span>
           </h1>
           <p className="text-sm md:text-lg mb-6 md:mb-8 max-w-2xl mx-auto text-sage-100 animate-fade-in">

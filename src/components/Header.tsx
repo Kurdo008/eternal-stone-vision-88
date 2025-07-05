@@ -13,7 +13,7 @@ const Header = () => {
 
   const allProducts = [
     'Graniet', 'Marmer', 'Natuursteen', 'Modern', 'Klassiek',
-    'Grafsteen', 'Monument', 'Rechtopstaand', 'Liggend', 'Hartvorm',
+    'Steen Kunst', 'Gedenkstenen', 'Rechtopstaand', 'Liggend', 'Hartvorm',
     'Basalt', 'Zandsteen', 'Rechthoekig', 'Rond'
   ];
 
@@ -66,8 +66,8 @@ const Header = () => {
               <Mountain className="h-5 w-5 md:h-6 md:w-6 text-white" />
             </div>
             <div className="hidden lg:block">
-              <h1 className="text-lg md:text-xl font-bold text-sage-700">Eternum Monuments</h1>
-              <p className="text-xs text-sage-500">Grafstenen & Monumenten</p>
+              <h1 className="text-lg md:text-xl font-bold text-sage-700">Aurora Stenen</h1>
+              <p className="text-xs text-sage-500">Natuursteen & Gedenkstenen</p>
             </div>
           </Link>
 
@@ -78,7 +78,7 @@ const Header = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-sage-400" />
                 <Input
                   type="text"
-                  placeholder="Zoek monumenten..."
+                  placeholder="Zoek gedenkstenen..."
                   value={searchQuery}
                   onChange={handleSearchChange}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}

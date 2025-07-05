@@ -15,48 +15,48 @@ const Index = () => {
     {
       icon: Eye,
       title: "Handgemaakt",
-      description: "Vakmanschap door ervaren ambachtslieden"
+      description: "Vakmanschap door ervaren test specialisten"
     },
     {
       icon: Leaf,
-      title: "Natuurlijke Harmonie",
-      description: "Ontwerpen die één worden met de omgeving"
+      title: "Natuurlijke Test",
+      description: "Test ontwerpen die één worden met de omgeving"
     },
     {
       icon: Shield,
-      title: "Eeuwige Duurzaamheid",
-      description: "Materialen die generaties lang mooi blijven"
+      title: "Test Duurzaamheid",
+      description: "Test materialen die generaties lang mooi blijven"
     },
     {
       icon: Palette,
-      title: "Persoonlijke Verhalen",
-      description: "Elk stuk vertelt een uniek verhaal"
+      title: "Test Verhalen",
+      description: "Elk test product vertelt een uniek verhaal"
     }
   ];
 
   const memorialGallery = [
     {
       image: "/api/placeholder/300/300",
-      title: "Tuin Herinneringen",
-      description: "Gedenkstenen in harmonie met natuur",
+      title: "Test Herinneringen",
+      description: "Test producten in harmonie met natuur",
       icon: TreePine
     },
     {
       image: "/api/placeholder/300/300", 
-      title: "Eeuwige Bloesems",
-      description: "Delicate ontwerpen geïnspireerd door bloemen",
+      title: "Test Bloesems",
+      description: "Test ontwerpen geïnspireerd door bloemen",
       icon: Flower
     },
     {
       image: "/api/placeholder/300/300",
-      title: "Liefdevol Gedenken",
-      description: "Persoonlijke verhalen in steen",
+      title: "Test Gedenken",
+      description: "Test verhalen in materiaal",
       icon: Heart
     },
     {
       image: "/api/placeholder/300/300",
-      title: "Sterren Memorial",
-      description: "Hemelse rust en vrede",
+      title: "Test Memorial",
+      description: "Test rust en vrede",
       icon: Star
     }
   ];
@@ -77,11 +77,11 @@ const Index = () => {
         <div className="absolute inset-0 bg-sage-600/30"></div>
         <div className="container mx-auto text-center relative z-10">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-6 animate-fade-in leading-tight">
-            <span className="block sm:inline">Prachtige Gedenkstenen</span>
-            <span className="block text-sage-200 text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-1 sm:mt-0 sm:ml-2">in Harmonie met de Natuur</span>
+            <span className="block sm:inline">Test Producten</span>
+            <span className="block text-sage-200 text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-1 sm:mt-0 sm:ml-2">in Harmonie met de Test</span>
           </h1>
           <p className="text-sm md:text-lg mb-6 md:mb-8 max-w-2xl mx-auto text-sage-100 animate-fade-in">
-            Handgemaakt vakmanschap voor eeuwige herinneringen
+            Handgemaakt vakmanschap voor test herinneringen
           </p>
           <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center animate-fade-in">
             <Button 
@@ -90,7 +90,7 @@ const Index = () => {
               asChild
             >
               <Link to="/products">
-                Bekijk Collectie <ArrowRight className="ml-2 h-3 md:h-5 w-3 md:w-5" />
+                Bekijk Test Collectie <ArrowRight className="ml-2 h-3 md:h-5 w-3 md:w-5" />
               </Link>
             </Button>
             <Button 
@@ -98,7 +98,7 @@ const Index = () => {
               className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-sage-700 px-4 md:px-8 py-2 md:py-4 text-sm md:text-lg"
               asChild
             >
-              <Link to="/editor">Start 3D Ontwerp</Link>
+              <Link to="/editor">Start 3D Test</Link>
             </Button>
           </div>
         </div>
@@ -113,23 +113,23 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 items-center">
             <div>
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-sage-700 mb-3 md:mb-6">
-                Ervaar Uw Monument in 3D
+                Ervaar Uw Test in 3D
               </h2>
               <p className="text-xs md:text-base text-sage-600 mb-4 md:mb-6">
-                Onze geavanceerde 3D technologie stelt u in staat om uw monument van alle kanten te bekijken.
+                Onze geavanceerde 3D technologie stelt u in staat om uw test product van alle kanten te bekijken.
               </p>
               <ul className="space-y-1 md:space-y-3 mb-4 md:mb-6">
                 <li className="flex items-center text-sage-700 text-xs md:text-sm">
                   <div className="w-2 h-2 bg-sage-600 rounded-full mr-3"></div>
-                  360° weergave van uw monument
+                  360° weergave van uw test product
                 </li>
                 <li className="flex items-center text-sage-700 text-xs md:text-sm">
                   <div className="w-2 h-2 bg-sage-600 rounded-full mr-3"></div>
-                  Real-time materiaal voorbeelden
+                  Real-time test materiaal voorbeelden
                 </li>
                 <li className="flex items-center text-sage-700 text-xs md:text-sm">
                   <div className="w-2 h-2 bg-sage-600 rounded-full mr-3"></div>
-                  Instant tekst en gravure preview
+                  Instant test tekst en preview
                 </li>
               </ul>
               <div className="flex flex-col sm:flex-row gap-2">
@@ -138,7 +138,7 @@ const Index = () => {
                   className="bg-sage-600 hover:bg-sage-700 text-white border-none flex-1"
                   asChild
                 >
-                  <Link to="/editor">3D Editor</Link>
+                  <Link to="/editor">3D Test Editor</Link>
                 </Button>
                 <Button 
                   size="sm"
@@ -146,14 +146,14 @@ const Index = () => {
                   className="border-sage-600 text-sage-700 hover:bg-sage-50 flex-1"
                   asChild
                 >
-                  <Link to="/products">Bekijk Collectie</Link>
+                  <Link to="/products">Bekijk Test Collectie</Link>
                 </Button>
               </div>
             </div>
             <div className="bg-gradient-to-br from-sage-50 to-white p-2 md:p-6 rounded-xl shadow-lg">
               <Professional3DViewer 
                 material="granite"
-                text="In Herinnering"
+                text="Test Herinnering"
                 shape="rectangular"
                 color="#4a4a4a"
               />
@@ -170,10 +170,10 @@ const Index = () => {
         <div className="container mx-auto">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-sage-700 mb-2 md:mb-4">
-              Waar Ambacht & Natuur Samenkomen
+              Waar Test & Natuur Samenkomen
             </h2>
             <p className="text-sm md:text-lg text-sage-600 max-w-2xl mx-auto">
-              Traditionele technieken met respect voor natuurlijke schoonheid
+              Test technieken met respect voor natuurlijke schoonheid
             </p>
           </div>
           
@@ -198,10 +198,10 @@ const Index = () => {
         <div className="container mx-auto">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-sage-700 mb-2 md:mb-4">
-              Herinneringen in Steen
+              Test in Materiaal
             </h2>
             <p className="text-sm md:text-lg text-sage-600 max-w-2xl mx-auto">
-              Unieke monumenten die leven en natuur eren
+              Unieke test producten die leven en natuur eren
             </p>
           </div>
           
@@ -228,10 +228,10 @@ const Index = () => {
         <div className="container mx-auto">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-sage-700 mb-2 md:mb-4">
-              Bezoek Onze Showroom
+              Bezoek Onze Test Showroom
             </h2>
             <p className="text-sm md:text-lg text-sage-600 max-w-2xl mx-auto">
-              Ervaar de kwaliteit van onze monumenten persoonlijk
+              Ervaar de kwaliteit van onze test producten persoonlijk
             </p>
           </div>
           
@@ -244,7 +244,7 @@ const Index = () => {
                 <div>
                   <h3 className="text-sm md:text-lg font-semibold text-sage-700 mb-1">Adres</h3>
                   <p className="text-xs md:text-sm text-sage-600">
-                    Monumentenstraat 123<br />
+                    Test straat 123<br />
                     1234 AB Amsterdam<br />
                     Nederland
                   </p>
@@ -273,7 +273,7 @@ const Index = () => {
                   <h3 className="text-sm md:text-lg font-semibold text-sage-700 mb-1">Contact</h3>
                   <p className="text-xs md:text-sm text-sage-600">
                     Telefoon: +31 20 123 4567<br />
-                    Email: info@eternummonuments.nl
+                    Email: info@testcompany.nl
                   </p>
                 </div>
               </div>
@@ -302,7 +302,7 @@ const Index = () => {
         <div className="container mx-auto text-center relative z-10">
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3 md:mb-6">Niet Gevonden Wat U Zoekt?</h2>
           <p className="text-sm md:text-lg mb-4 md:mb-8 max-w-2xl mx-auto text-forest-100">
-            Wij maken ook volledig op maat gemaakte monumenten.
+            Wij maken ook volledig op maat gemaakte test producten.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 md:gap-4 justify-center">
             <Button 
@@ -317,7 +317,7 @@ const Index = () => {
               className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-forest-700"
               asChild
             >
-              <Link to="/editor">Start Custom Design</Link>
+              <Link to="/editor">Start Custom Test</Link>
             </Button>
           </div>
         </div>

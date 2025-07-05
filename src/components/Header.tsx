@@ -12,9 +12,9 @@ const Header = () => {
   const navigate = useNavigate();
 
   const allProducts = [
-    'Graniet', 'Marmer', 'Natuursteen', 'Modern', 'Klassiek',
-    'Steen Kunst', 'Gedenkstenen', 'Rechtopstaand', 'Liggend', 'Hartvorm',
-    'Basalt', 'Zandsteen', 'Rechthoekig', 'Rond'
+    'Test A', 'Test B', 'Test C', 'Test Modern', 'Test Klassiek',
+    'Test Product', 'Test Item', 'Test Rechtop', 'Test Liggend', 'Test Hart',
+    'Test Material', 'Test Stone', 'Test Rechthoek', 'Test Rond'
   ];
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,12 +47,12 @@ const Header = () => {
   };
 
   const collections = [
-    { name: 'Graniet', path: '/products?category=rechtop&material=graniet' },
-    { name: 'Marmer', path: '/products?category=rechtop&material=marmer' },
-    { name: 'Natuursteen', path: '/products?category=rechtop&material=zandsteen' },
-    { name: 'Modern', path: '/products?category=speciaal' },
-    { name: 'Klassiek', path: '/products?category=rechtop' },
-    { name: '3D Ontwerp', path: '/editor', isSpecial: true }
+    { name: 'Test A', path: '/products?category=rechtop&material=graniet' },
+    { name: 'Test B', path: '/products?category=rechtop&material=marmer' },
+    { name: 'Test C', path: '/products?category=rechtop&material=zandsteen' },
+    { name: 'Test Modern', path: '/products?category=speciaal' },
+    { name: 'Test Klassiek', path: '/products?category=rechtop' },
+    { name: '3D Test', path: '/editor', isSpecial: true }
   ];
 
   return (
@@ -66,8 +66,8 @@ const Header = () => {
               <Mountain className="h-5 w-5 md:h-6 md:w-6 text-white" />
             </div>
             <div className="hidden lg:block">
-              <h1 className="text-lg md:text-xl font-bold text-sage-700">Aurora Stenen</h1>
-              <p className="text-xs text-sage-500">Natuursteen & Gedenkstenen</p>
+              <h1 className="text-lg md:text-xl font-bold text-sage-700">Test Company</h1>
+              <p className="text-xs text-sage-500">Test Products & Services</p>
             </div>
           </Link>
 
@@ -78,7 +78,7 @@ const Header = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-sage-400" />
                 <Input
                   type="text"
-                  placeholder="Zoek gedenkstenen..."
+                  placeholder="Zoek test producten..."
                   value={searchQuery}
                   onChange={handleSearchChange}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}

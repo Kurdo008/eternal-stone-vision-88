@@ -7,26 +7,26 @@ import { Link } from 'react-router-dom';
 const CollectionShowcase = () => {
   const collections = [
     {
-      name: 'Graniet',
-      description: 'Duurzaam en elegant graniet voor eeuwige gedenkstenen',
+      name: 'Test A',
+      description: 'Duurzaam en elegant test product voor test doeleinden',
       image: '/lovable-uploads/3d8bd79b-695c-4e81-a1f5-be4438c59390.png',
       path: '/products?category=rechtop&material=graniet'
     },
     {
-      name: 'Marmer',
-      description: 'Klassieke marmeren gedenkstenen met tijdloze schoonheid',
+      name: 'Test B',
+      description: 'Klassieke test producten met tijdloze schoonheid',
       image: '/lovable-uploads/2de35e37-3622-499a-82ec-2df7299494e0.png',
       path: '/products?category=rechtop&material=marmer'
     },
     {
-      name: 'Natuursteen',
-      description: 'Authentieke natuursteen direct uit de natuur',
+      name: 'Test C',
+      description: 'Authentieke test materiaal direct uit de natuur',
       image: '/lovable-uploads/f0ad3896-94f1-46b6-a5b1-abe90a55da80.png',
       path: '/products?category=rechtop&material=zandsteen'
     },
     {
-      name: 'Modern',
-      description: 'Moderne designs voor hedendaagse gedenkstenen',
+      name: 'Test Modern',
+      description: 'Moderne test designs voor hedendaagse toepassingen',
       image: '/lovable-uploads/71035eda-0c60-4379-a78a-b1ef9a736998.png',
       path: '/products?category=speciaal'
     }
@@ -37,10 +37,10 @@ const CollectionShowcase = () => {
       <div className="container mx-auto">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-sage-700 mb-2 md:mb-4">
-            Onze Gedenkstenen Collecties
+            Onze Test Collecties
           </h2>
           <p className="text-sm md:text-lg text-sage-600 max-w-2xl mx-auto">
-            Ontdek onze uitgebreide collectie van hoogwaardige gedenkstenen
+            Ontdek onze uitgebreide collectie van hoogwaardige test producten
           </p>
         </div>
         
@@ -66,7 +66,7 @@ const CollectionShowcase = () => {
                   className="w-full border-sage-300 text-white bg-sage-600 hover:bg-sage-700 text-xs mt-auto"
                 >
                   <Link to={collection.path}>
-                    Bekijk Collectie <ArrowRight className="ml-1 h-3 w-3" />
+                    Bekijk Test Collectie <ArrowRight className="ml-1 h-3 w-3" />
                   </Link>
                 </Button>
               </CardContent>

@@ -9,25 +9,25 @@ const CollectionShowcase = () => {
     {
       name: 'Test A',
       description: 'Duurzaam en elegant test product voor test doeleinden',
-      image: '/lovable-uploads/3d8bd79b-695c-4e81-a1f5-be4438c59390.png',
+      image: '/api/placeholder/300/300',
       path: '/products?category=rechtop&material=graniet'
     },
     {
       name: 'Test B',
       description: 'Klassieke test producten met tijdloze schoonheid',
-      image: '/lovable-uploads/2de35e37-3622-499a-82ec-2df7299494e0.png',
+      image: '/api/placeholder/300/300',
       path: '/products?category=rechtop&material=marmer'
     },
     {
       name: 'Test C',
       description: 'Authentieke test materiaal direct uit de natuur',
-      image: '/lovable-uploads/f0ad3896-94f1-46b6-a5b1-abe90a55da80.png',
+      image: '/api/placeholder/300/300',
       path: '/products?category=rechtop&material=zandsteen'
     },
     {
       name: 'Test Modern',
       description: 'Moderne test designs voor hedendaagse toepassingen',
-      image: '/lovable-uploads/71035eda-0c60-4379-a78a-b1ef9a736998.png',
+      image: '/api/placeholder/300/300',
       path: '/products?category=speciaal'
     }
   ];
